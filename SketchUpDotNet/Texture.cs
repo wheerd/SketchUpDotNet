@@ -6,23 +6,10 @@ namespace SketchUpDotNet;
 
 public class Texture : Entity<SUTextureRef>
 {
-    public static unsafe Texture FromImageData(int width, int height, int bitsPerPixel, byte[] data)
+    public static unsafe Texture FromImage(ImageRep rep)
     {
-        if (data.Length < width * height * bitsPerPixel / 8)
-            throw new ArgumentException(
-                "Data length does not match the specified dimensions and bits per pixel.",
-                nameof(data)
-            );
         SUTextureRef reference;
-        fixed (byte* ptr = &data[0])
-            SUTextureCreateFromImageData(
-                    &reference,
-                    (nuint)width,
-                    (nuint)height,
-                    (nuint)bitsPerPixel,
-                    ptr
-                )
-                .CheckError();
+        SUTextureCreateFromImageRep(&reference, rep.Reference).CheckError();
         return new Texture(reference);
     }
 

@@ -5,6 +5,33 @@ namespace SketchUpDotNet;
 
 public class ImageRep : SUBase<SUImageRepRef>
 {
+    public static unsafe ImageRep FromImageData(
+        int width,
+        int height,
+        int bitsPerPixel,
+        int rowPadding,
+        byte[] data
+    )
+    {
+        if (data.Length < (width * bitsPerPixel / 8 + rowPadding) * height)
+            throw new ArgumentException(
+                "Data length does not match the specified dimensions and bits per pixel.",
+                nameof(data)
+            );
+        ImageRep rep = new();
+        fixed (byte* ptr = &data[0])
+            SUImageRepSetData(
+                    rep.Reference,
+                    (nuint)width,
+                    (nuint)height,
+                    (nuint)bitsPerPixel,
+                    (nuint)rowPadding,
+                    ptr
+                )
+                .CheckError();
+        return rep;
+    }
+
     public int Width => GetDimensions().Item1;
     public int Height => GetDimensions().Item2;
 

@@ -15,9 +15,10 @@ public class Model : SUBase<SUModelRef>
     {
         var pathBytes = path.GetSBytes();
         SUModelRef model;
+        SUModelLoadStatus status;
         fixed (sbyte* pathPtr = &pathBytes[0])
         {
-            SUModelCreateFromFile(&model, pathPtr).CheckError();
+            SUModelCreateFromFileWithStatus(&model, pathPtr, &status).CheckError();
         }
         return new Model(model);
     }
