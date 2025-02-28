@@ -15,48 +15,46 @@ public class Edge : DrawingElement<SUEdgeRef>
         return new(edge);
     }
 
-    public Vertex Start => GetStart();
-    public Vertex End => GetEnd();
+    public unsafe Vertex Start => GetOne<SUVertexRef, Vertex>(&SUEdgeGetStartVertex, d => new(d));
+    public unsafe Vertex End => GetOne<SUVertexRef, Vertex>(&SUEdgeGetEndVertex, d => new(d));
 
-    private unsafe Vertex GetStart() =>
-        GetOne<SUVertexRef, Vertex>(&SUEdgeGetStartVertex, d => new(d));
+    public unsafe Curve? Curve => GetOptionalOne(&SUEdgeGetCurve, (SUCurveRef c) => new Curve(c));
 
-    private unsafe Vertex GetEnd() => GetOne<SUVertexRef, Vertex>(&SUEdgeGetEndVertex, d => new(d));
-
-    public Color? Color
+    public unsafe Color? Color
     {
-        get => GetColor();
-        set => SetColor(value ?? throw new ArgumentNullException(nameof(Color)));
+        get => GetOptionalColor(&SUEdgeGetColor);
+        set => SetColor(&SUEdgeSetColor, value ?? throw new ArgumentNullException(nameof(Color)));
     }
 
-    public bool Soft
+    public unsafe bool Soft
     {
-        get => GetSoft();
-        set => SetSoft(value);
+        get => GetBool(&SUEdgeGetSoft);
+        set => SetBool(&SUEdgeSetSoft, value);
     }
 
-    public bool Smooth
+    public unsafe bool Smooth
     {
-        get => GetSmooth();
-        set => SetSmooth(value);
+        get => GetBool(&SUEdgeGetSmooth);
+        set => SetBool(&SUEdgeSetSmooth, value);
     }
 
-    public IEnumerable<Face> Faces => GetFaces();
-
-    private unsafe bool GetSoft() => GetBool(&SUEdgeGetSoft);
-
-    private unsafe void SetSoft(bool value) => SetBool(&SUEdgeSetSoft, value);
-
-    private unsafe bool GetSmooth() => GetBool(&SUEdgeGetSmooth);
-
-    private unsafe void SetSmooth(bool value) => SetBool(&SUEdgeSetSmooth, value);
-
-    private unsafe Face[] GetFaces() =>
+    public unsafe IEnumerable<Face> Faces =>
         GetMany(&SUEdgeGetNumFaces, &SUEdgeGetFaces, (SUFaceRef f) => new Face(f));
+    public unsafe int FaceCount => GetInt(&SUEdgeGetNumFaces);
 
-    private unsafe Color? GetColor() => GetOptionalColor(&SUEdgeGetColor);
+    public unsafe double LengthWithTransform(SUTransformation transformation)
+    {
+        double value;
+        SUEdgeGetLengthWithTransform(Reference, &transformation, &value).CheckError();
+        return value;
+    }
 
-    private unsafe void SetColor(Color color) => SetColor(&SUEdgeSetColor, color);
+    public unsafe bool IsReversedInFace(Face face)
+    {
+        bool value;
+        SUEdgeReversedInFace(Reference, face.Reference, &value).CheckError();
+        return value;
+    }
 
     internal unsafe Edge(SUEdgeRef @ref)
         : base(@ref) { }

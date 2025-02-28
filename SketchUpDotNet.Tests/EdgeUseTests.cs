@@ -21,7 +21,7 @@ public class EdgeUseTests
     }
 
     [Test]
-    public void Snapshot()
+    public Task Snapshot()
     {
         // Arrange
         VerifySettings settings = new();
@@ -33,12 +33,12 @@ public class EdgeUseTests
         // Unless owned by model the edge uses are freed immediately.
         using var model = new Model();
         var face = Face.CreateSimple(new(0, 0, 0), new(100, 0, 0), new(0, 100, 0));
-        model.Entities.AddFace(face);
+        model.Entities.AddFaces(face);
 
         // Act
         var result = face.OuterLoop.EdgeUses.ToList();
 
         // Assert
-        Verify(result, settings).ToTask().Wait();
+        return Verify(result, settings);
     }
 }

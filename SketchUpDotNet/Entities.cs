@@ -5,31 +5,42 @@ namespace SketchUpDotNet;
 
 public class Entities : SUBase<SUEntitiesRef>
 {
-    public BoundingBox BoundingBox => GetBoundingBox();
+    public unsafe BoundingBox BoundingBox =>
+        BoundingBox.FromSU(Get<SUBoundingBox3D>(&SUEntitiesGetBoundingBox));
 
-    public IEnumerable<Face> Faces => GetFaces();
+    public unsafe IEnumerable<Face> Faces =>
+        GetMany(&SUEntitiesGetNumFaces, &SUEntitiesGetFaces, static (SUFaceRef e) => new Face(e));
+    public unsafe int FaceCount => GetInt(&SUEntitiesGetNumFaces);
 
-    public unsafe void AddFace(params Face[] faces) => AddMany(&SUEntitiesAddFaces, faces);
+    public unsafe void AddFaces(params Face[] faces) => AddMany(&SUEntitiesAddFaces, faces);
 
-    public IEnumerable<Edge> Edges => GetEdges();
-    public IEnumerable<Edge> StandaloneEdges => GetEdges(true);
+    public unsafe IEnumerable<Edge> Edges => GetEdges();
+    public unsafe IEnumerable<Edge> StandaloneEdges => GetEdges(true);
+    public unsafe int EdgeCount => GetEdgeCount();
+    public unsafe int StandaloneEdgeCount => GetEdgeCount(true);
 
-    public unsafe void AddEdge(params Edge[] edges) => AddMany(&SUEntitiesAddEdges, edges);
+    public unsafe void AddEdges(params Edge[] edges) => AddMany(&SUEntitiesAddEdges, edges);
 
-    public IEnumerable<Group> Groups => GetGroups();
+    public unsafe IEnumerable<Group> Groups =>
+        GetMany(
+            &SUEntitiesGetNumGroups,
+            &SUEntitiesGetGroups,
+            static (SUGroupRef g) => new Group(g)
+        );
+    public unsafe int GroupCount => GetInt(&SUEntitiesGetNumGroups);
 
-    public unsafe void AddGroup(Group group)
-    {
-        SUEntitiesAddGroup(Reference, group.Reference).CheckError();
-        if (attached)
-        {
-            group.SetAttachedToModel(true);
-        }
-    }
+    public unsafe void AddGroup(Group group) =>
+        SetOne<SUGroupRef, Group>(&SUEntitiesAddGroup, group);
 
-    public IEnumerable<ComponentInstance> Instances => GetInstances();
+    public unsafe IEnumerable<ComponentInstance> Instances =>
+        GetMany(
+            &SUEntitiesGetNumInstances,
+            &SUEntitiesGetInstances,
+            (SUComponentInstanceRef i) => new ComponentInstance(i, attached)
+        );
+    public unsafe int InstanceCount => GetInt(&SUEntitiesGetNumInstances);
 
-    public unsafe void AddInstance(ComponentInstance instance)
+    public unsafe void AddInstances(ComponentInstance instance)
     {
         SUEntitiesAddInstance(Reference, instance.Reference, null).CheckError();
         if (attached)
@@ -37,6 +48,16 @@ public class Entities : SUBase<SUEntitiesRef>
             instance.SetAttachedToModel(true);
         }
     }
+
+    public unsafe IEnumerable<Curve> Curves =>
+        GetMany(
+            &SUEntitiesGetNumCurves,
+            &SUEntitiesGetCurves,
+            static (SUCurveRef e) => new Curve(e)
+        );
+    public unsafe int CurveCount => GetInt(&SUEntitiesGetNumCurves);
+
+    public unsafe void AddCurves(params Curve[] curves) => AddMany(&SUEntitiesAddCurves, curves);
 
     public void Clear()
     {
@@ -46,7 +67,7 @@ public class Entities : SUBase<SUEntitiesRef>
     public unsafe void Remove(params IEntity[] entities)
     {
         var refs = entities.Select(e => e.EntityRef).ToArray();
-        fixed (SUEntityRef* refsPtr = &refs[0])
+        fixed (SUEntityRef* refsPtr = refs)
         {
             SUEntitiesErase(Reference, (nuint)refs.Length, refsPtr).CheckError();
         }
@@ -65,26 +86,6 @@ public class Entities : SUBase<SUEntitiesRef>
     {
         this.attached = attached;
     }
-
-    private unsafe BoundingBox GetBoundingBox() =>
-        BoundingBox.FromSU(Get<SUBoundingBox3D>(&SUEntitiesGetBoundingBox));
-
-    private unsafe Face[] GetFaces() =>
-        GetMany(&SUEntitiesGetNumFaces, &SUEntitiesGetFaces, static (SUFaceRef e) => new Face(e));
-
-    private unsafe Group[] GetGroups() =>
-        GetMany(
-            &SUEntitiesGetNumGroups,
-            &SUEntitiesGetGroups,
-            static (SUGroupRef g) => new Group(g)
-        );
-
-    private unsafe ComponentInstance[] GetInstances() =>
-        GetMany(
-            &SUEntitiesGetNumInstances,
-            &SUEntitiesGetInstances,
-            (SUComponentInstanceRef i) => new ComponentInstance(i, attached)
-        );
 
     private unsafe Edge[] GetEdges(bool standaloneOnly = false)
     {
@@ -109,6 +110,14 @@ public class Entities : SUBase<SUEntitiesRef>
             }
         }
         return results;
+    }
+
+    private unsafe int GetEdgeCount(bool standaloneOnly = false)
+    {
+        nuint num;
+        byte standaloneByte = *(byte*)&standaloneOnly;
+        SUEntitiesGetNumEdges(Reference, standaloneByte, &num).CheckError();
+        return (int)num;
     }
 
     protected sealed override unsafe delegate* <SUEntitiesRef*, SUResult> Release => null;

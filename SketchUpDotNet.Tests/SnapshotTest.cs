@@ -8,7 +8,7 @@ public class SnapshotTest
     {
         settings.IgnoreMembers<Vertex>(_ => _.Faces, _ => _.Edges, _ => _.Loops);
         settings.IgnoreMembers<Loop>(_ => _.Edges, _ => _.Face);
-        settings.IgnoreMembers<Edge>(_ => _.Faces);
+        settings.IgnoreMembers<Edge>(_ => _.Faces, _ => _.Curve);
         settings.IgnoreMembers<Component>(_ => _.Instances);
         settings.IgnoreMembers<EdgeUse>(
             _ => _.Face,
@@ -30,7 +30,7 @@ public class SnapshotTest
         );
 
         // Act
-        var result = Model.Load(path);
+        using var result = Model.Load(path);
 
         // Assert
         return Verify(result, settings);
