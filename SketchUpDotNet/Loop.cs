@@ -5,19 +5,17 @@ namespace SketchUpDotNet;
 
 public class Loop : Entity<SULoopRef>
 {
-    public Face Face => GetFace();
+    public unsafe Face Face => GetOne(&SULoopGetFace, (SUFaceRef f) => new Face(f));
 
-    public IEnumerable<Edge> Edges => GetEdges();
-
-    public IEnumerable<Vertex> Vertices => GetVertices();
-
-    private unsafe Edge[] GetEdges() =>
+    public unsafe IEnumerable<Edge> Edges =>
         GetMany(&SULoopGetNumVertices, &SULoopGetEdges, (SUEdgeRef e) => new Edge(e));
+    public unsafe IEnumerable<EdgeUse> EdgeUses =>
+        GetMany(&SULoopGetNumVertices, &SULoopGetEdgeUses, (SUEdgeUseRef e) => new EdgeUse(e));
 
-    private unsafe Vertex[] GetVertices() =>
+    public unsafe IEnumerable<Vertex> Vertices =>
         GetMany(&SULoopGetNumVertices, &SULoopGetVertices, (SUVertexRef v) => new Vertex(v));
 
-    private unsafe Face GetFace() => GetOne(&SULoopGetFace, (SUFaceRef f) => new Face(f));
+    public unsafe int VertexCount => GetInt(&SULoopGetNumVertices);
 
     internal unsafe Loop(SULoopRef @ref)
         : base(@ref) { }

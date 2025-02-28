@@ -10,6 +10,14 @@ public class SnapshotTest
         settings.IgnoreMembers<Loop>(_ => _.Edges, _ => _.Face);
         settings.IgnoreMembers<Edge>(_ => _.Faces);
         settings.IgnoreMembers<Component>(_ => _.Instances);
+        settings.IgnoreMembers<EdgeUse>(
+            _ => _.Face,
+            _ => _.Edge,
+            _ => _.Loop,
+            _ => _.Partners,
+            _ => _.Previous,
+            _ => _.Next
+        );
     }
 
     [Test]

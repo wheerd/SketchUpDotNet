@@ -205,7 +205,10 @@ public abstract class SUBase<T> : IDisposable
             {
                 fixed (T* refPtr = &Reference)
                 {
+                    var innerPointer = (GenericRef*)refPtr;
+                    ObjectDisposedException.ThrowIf(innerPointer->ptr == null, this);
                     Release(refPtr);
+                    innerPointer->ptr = null;
                 }
             }
             disposed = true;
@@ -222,4 +225,30 @@ public abstract class SUBase<T> : IDisposable
     {
         Dispose(false);
     }
+
+    public override unsafe bool Equals(object? obj)
+    {
+        if (obj is SUBase<T> other)
+        {
+            fixed (T* referencePtr = &Reference)
+            fixed (T* otherPtr = &other.Reference)
+                return ((GenericRef*)referencePtr)->ptr == ((GenericRef*)otherPtr)->ptr;
+        }
+        return false;
+    }
+
+    public override unsafe int GetHashCode()
+    {
+        fixed (T* referencePtr = &Reference)
+            return ((long)((GenericRef*)referencePtr)->ptr).GetHashCode();
+    }
+
+    public static bool operator ==(SUBase<T> left, SUBase<T> right) => left.Equals(right);
+
+    public static bool operator !=(SUBase<T> left, SUBase<T> right) => !left.Equals(right);
+}
+
+unsafe struct GenericRef
+{
+    internal void* ptr;
 }

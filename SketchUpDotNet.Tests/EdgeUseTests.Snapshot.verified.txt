@@ -1,0 +1,227 @@
+﻿[
+  {
+    Edge: $58,
+    Loop: $66,
+    Face: $65,
+    StartVertex: $55,
+    StartVertexNormal: {
+      Z: 25
+    },
+    EndVertex: $56,
+    EndVertexNormal: {
+      Z: 25
+    },
+    IsReversed: false,
+    Previous: {
+      Edge: $60,
+      Loop: $66,
+      Face: $65,
+      StartVertex: $57,
+      StartVertexNormal: {
+        Z: 25
+      },
+      EndVertex: $55,
+      EndVertexNormal: {
+        Z: 25
+      },
+      IsReversed: false,
+      Previous: {
+        Edge: $59,
+        Loop: $66,
+        Face: $65,
+        StartVertex: $56,
+        StartVertexNormal: {
+          Z: 25
+        },
+        EndVertex: $57,
+        EndVertexNormal: {
+          Z: 25
+        },
+        IsReversed: false,
+        Id: 68
+      },
+      Id: 69
+    },
+    Next: {
+      Edge: $59,
+      Loop: $66,
+      Face: $65,
+      StartVertex: $56,
+      StartVertexNormal: {
+        Z: 25
+      },
+      EndVertex: $57,
+      EndVertexNormal: {
+        Z: 25
+      },
+      IsReversed: false,
+      Next: {
+        Edge: $60,
+        Loop: $66,
+        Face: $65,
+        StartVertex: $57,
+        StartVertexNormal: {
+          Z: 25
+        },
+        EndVertex: $55,
+        EndVertexNormal: {
+          Z: 25
+        },
+        IsReversed: false,
+        Id: 69
+      },
+      Id: 68
+    },
+    Id: 67
+  },
+  {
+    Edge: $59,
+    Loop: $66,
+    Face: $65,
+    StartVertex: $56,
+    StartVertexNormal: {
+      Z: 25
+    },
+    EndVertex: $57,
+    EndVertexNormal: {
+      Z: 25
+    },
+    IsReversed: false,
+    Previous: {
+      Edge: $58,
+      Loop: $66,
+      Face: $65,
+      StartVertex: $55,
+      StartVertexNormal: {
+        Z: 25
+      },
+      EndVertex: $56,
+      EndVertexNormal: {
+        Z: 25
+      },
+      IsReversed: false,
+      Previous: {
+        Edge: $60,
+        Loop: $66,
+        Face: $65,
+        StartVertex: $57,
+        StartVertexNormal: {
+          Z: 25
+        },
+        EndVertex: $55,
+        EndVertexNormal: {
+          Z: 25
+        },
+        IsReversed: false,
+        Id: 69
+      },
+      Id: 67
+    },
+    Next: {
+      Edge: $60,
+      Loop: $66,
+      Face: $65,
+      StartVertex: $57,
+      StartVertexNormal: {
+        Z: 25
+      },
+      EndVertex: $55,
+      EndVertexNormal: {
+        Z: 25
+      },
+      IsReversed: false,
+      Next: {
+        Edge: $58,
+        Loop: $66,
+        Face: $65,
+        StartVertex: $55,
+        StartVertexNormal: {
+          Z: 25
+        },
+        EndVertex: $56,
+        EndVertexNormal: {
+          Z: 25
+        },
+        IsReversed: false,
+        Id: 67
+      },
+      Id: 69
+    },
+    Id: 68
+  },
+  {
+    Edge: $60,
+    Loop: $66,
+    Face: $65,
+    StartVertex: $57,
+    StartVertexNormal: {
+      Z: 25
+    },
+    EndVertex: $55,
+    EndVertexNormal: {
+      Z: 25
+    },
+    IsReversed: false,
+    Previous: {
+      Edge: $59,
+      Loop: $66,
+      Face: $65,
+      StartVertex: $56,
+      StartVertexNormal: {
+        Z: 25
+      },
+      EndVertex: $57,
+      EndVertexNormal: {
+        Z: 25
+      },
+      IsReversed: false,
+      Previous: {
+        Edge: $58,
+        Loop: $66,
+        Face: $65,
+        StartVertex: $55,
+        StartVertexNormal: {
+          Z: 25
+        },
+        EndVertex: $56,
+        EndVertexNormal: {
+          Z: 25
+        },
+        IsReversed: false,
+        Id: 67
+      },
+      Id: 68
+    },
+    Next: {
+      Edge: $58,
+      Loop: $66,
+      Face: $65,
+      StartVertex: $55,
+      StartVertexNormal: {
+        Z: 25
+      },
+      EndVertex: $56,
+      EndVertexNormal: {
+        Z: 25
+      },
+      IsReversed: false,
+      Next: {
+        Edge: $59,
+        Loop: $66,
+        Face: $65,
+        StartVertex: $56,
+        StartVertexNormal: {
+          Z: 25
+        },
+        EndVertex: $57,
+        EndVertexNormal: {
+          Z: 25
+        },
+        IsReversed: false,
+        Id: 68
+      },
+      Id: 67
+    },
+    Id: 69
+  }
+]

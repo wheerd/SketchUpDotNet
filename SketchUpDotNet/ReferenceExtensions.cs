@@ -8,6 +8,15 @@ namespace SketchUpDotNet;
 internal static class ReferenceExtensions
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static unsafe T EnsureReferenceValid<T>(this T reference)
+        where T : unmanaged
+    {
+        var genericRef = (GenericRef*)&reference;
+        ObjectDisposedException.ThrowIf(genericRef->ptr == null, reference);
+        return reference;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static unsafe void AddMany<T, TElement>(
         this T reference,
         delegate* <T, nuint, TElement*, SUResult> add,
@@ -20,7 +29,7 @@ internal static class ReferenceExtensions
         var refs = elements.Select(f => f.Reference).ToArray();
         fixed (TElement* refsPtr = &refs[0])
         {
-            add(reference, (nuint)refs.Length, refsPtr).CheckError();
+            add(reference.EnsureReferenceValid(), (nuint)refs.Length, refsPtr).CheckError();
         }
         if (attached)
         {
@@ -44,14 +53,14 @@ internal static class ReferenceExtensions
         where TOut : SUBase<TElement>
     {
         nuint num;
-        getCount(reference, &num).CheckError();
+        getCount(reference.EnsureReferenceValid(), &num).CheckError();
         if (num == 0)
             return [];
         TElement[] refs = new TElement[num];
         nuint count;
         fixed (TElement* refsPtr = &refs[0])
         {
-            get(reference, num, refsPtr, &count).CheckError();
+            get(reference.EnsureReferenceValid(), num, refsPtr, &count).CheckError();
         }
         var results = new TOut[count];
         for (nuint i = 0; i < count; i++)
@@ -74,7 +83,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         nuint num;
-        getCount(reference, &num).CheckError();
+        getCount(reference.EnsureReferenceValid(), &num).CheckError();
         if (num == 0)
             return [];
         SUStringRef[] refs = new SUStringRef[num];
@@ -90,7 +99,7 @@ internal static class ReferenceExtensions
             nuint count;
             fixed (SUStringRef* refsPtr = &refs[0])
             {
-                get(reference, num, refsPtr, &count).CheckError();
+                get(reference.EnsureReferenceValid(), num, refsPtr, &count).CheckError();
             }
             var results = new string[count];
             for (nuint i = 0; i < count; i++)
@@ -118,11 +127,12 @@ internal static class ReferenceExtensions
         Func<TElement, TOut> construct,
         bool attached
     )
+        where T : unmanaged
         where TElement : unmanaged
         where TOut : SUBase<TElement>
     {
         TElement element;
-        get(reference, &element).CheckError();
+        get(reference.EnsureReferenceValid(), &element).CheckError();
         var outElement = construct(element);
         if (attached)
         {
@@ -139,6 +149,7 @@ internal static class ReferenceExtensions
         bool attached,
         string key
     )
+        where T : unmanaged
         where TElement : unmanaged
         where TOut : SUBase<TElement>
     {
@@ -146,7 +157,7 @@ internal static class ReferenceExtensions
         TElement dict;
         fixed (sbyte* bytesPtr = &bytes[0])
         {
-            get(reference, bytesPtr, &dict).CheckError();
+            get(reference.EnsureReferenceValid(), bytesPtr, &dict).CheckError();
         }
         var result = construct(dict);
         if (attached)
@@ -161,11 +172,12 @@ internal static class ReferenceExtensions
         Func<TElement, TOut> construct,
         bool attached
     )
+        where T : unmanaged
         where TElement : unmanaged
         where TOut : SUBase<TElement>
     {
         TElement element;
-        var result = get(reference, &element);
+        var result = get(reference.EnsureReferenceValid(), &element);
         if (result == SUResult.SU_ERROR_NO_DATA)
             return null;
         result.CheckError();
@@ -182,12 +194,13 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, SUStringRef*, SUResult> getter
     )
+        where T : unmanaged
     {
         SUStringRef stringRef;
         SUStringCreate(&stringRef).CheckError();
         try
         {
-            getter(reference, &stringRef).CheckError();
+            getter(reference.EnsureReferenceValid(), &stringRef).CheckError();
             return stringRef.GetString();
         }
         finally
@@ -202,18 +215,20 @@ internal static class ReferenceExtensions
         delegate* <T, sbyte*, SUResult> setter,
         string value
     )
+        where T : unmanaged
     {
         fixed (sbyte* bytesPtr = value.GetSBytes())
         {
-            setter(reference, bytesPtr).CheckError();
+            setter(reference.EnsureReferenceValid(), bytesPtr).CheckError();
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static unsafe bool GetBool<T>(this T reference, delegate* <T, bool*, SUResult> getter)
+        where T : unmanaged
     {
         bool value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value;
     }
 
@@ -223,9 +238,10 @@ internal static class ReferenceExtensions
         delegate* <T, byte, SUResult> setter,
         bool value
     )
+        where T : unmanaged
     {
         byte byteValue = *(byte*)&value;
-        setter(reference, byteValue).CheckError();
+        setter(reference.EnsureReferenceValid(), byteValue).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -233,9 +249,10 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, SUColor*, SUResult> getter
     )
+        where T : unmanaged
     {
         SUColor value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value.ToColor();
     }
 
@@ -244,9 +261,10 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, SUColor*, SUResult> getter
     )
+        where T : unmanaged
     {
         SUColor value;
-        var result = getter(reference, &value);
+        var result = getter(reference.EnsureReferenceValid(), &value);
         if (result == SUResult.SU_ERROR_NO_DATA)
         {
             return null;
@@ -261,9 +279,10 @@ internal static class ReferenceExtensions
         delegate* <T, SUColor*, SUResult> setter,
         Color value
     )
+        where T : unmanaged
     {
         SUColor suColor = value.ToSU();
-        setter(reference, &suColor).CheckError();
+        setter(reference.EnsureReferenceValid(), &suColor).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -271,9 +290,10 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, sbyte*, SUResult> getter
     )
+        where T : unmanaged
     {
         sbyte value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value;
     }
 
@@ -283,23 +303,26 @@ internal static class ReferenceExtensions
         delegate* <T, sbyte, SUResult> setter,
         sbyte value
     )
+        where T : unmanaged
     {
-        setter(reference, value).CheckError();
+        setter(reference.EnsureReferenceValid(), value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static unsafe int GetInt<T>(this T reference, delegate* <T, int*, SUResult> getter)
+        where T : unmanaged
     {
         int value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static unsafe int GetInt<T>(this T reference, delegate* <T, nuint*, SUResult> getter)
+        where T : unmanaged
     {
         nuint value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return (int)value;
     }
 
@@ -309,8 +332,9 @@ internal static class ReferenceExtensions
         delegate* <T, int, SUResult> setter,
         int value
     )
+        where T : unmanaged
     {
-        setter(reference, value).CheckError();
+        setter(reference.EnsureReferenceValid(), value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -318,9 +342,10 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, double*, SUResult> getter
     )
+        where T : unmanaged
     {
         double value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value;
     }
 
@@ -329,9 +354,10 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, double*, SUResult> getter
     )
+        where T : unmanaged
     {
         double value;
-        var result = getter(reference, &value);
+        var result = getter(reference.EnsureReferenceValid(), &value);
         if (result == SUResult.SU_ERROR_NO_DATA)
             return null;
         result.CheckError();
@@ -344,8 +370,9 @@ internal static class ReferenceExtensions
         delegate* <T, double, SUResult> setter,
         double value
     )
+        where T : unmanaged
     {
-        setter(reference, value).CheckError();
+        setter(reference.EnsureReferenceValid(), value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -353,9 +380,10 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, short*, SUResult> getter
     )
+        where T : unmanaged
     {
         short value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value;
     }
 
@@ -365,8 +393,9 @@ internal static class ReferenceExtensions
         delegate* <T, short, SUResult> setter,
         short value
     )
+        where T : unmanaged
     {
-        setter(reference, value).CheckError();
+        setter(reference.EnsureReferenceValid(), value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -374,11 +403,12 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, double*, SUResult> getter
     )
+        where T : unmanaged
     {
         var vector = new double[3];
         fixed (double* vectorPtr = &vector[0])
         {
-            getter(reference, vectorPtr).CheckError();
+            getter(reference.EnsureReferenceValid(), vectorPtr).CheckError();
         }
         return Point3D.FromVector(vector);
     }
@@ -389,19 +419,21 @@ internal static class ReferenceExtensions
         delegate* <T, double*, SUResult> setter,
         Point3D value
     )
+        where T : unmanaged
     {
         var values = new double[] { value.X, value.Y, value.Z };
         fixed (double* valuesPtr = &values[0])
         {
-            setter(reference, valuesPtr).CheckError();
+            setter(reference.EnsureReferenceValid(), valuesPtr).CheckError();
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static unsafe long GetLong<T>(this T reference, delegate* <T, long*, SUResult> getter)
+        where T : unmanaged
     {
         long value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value;
     }
 
@@ -411,8 +443,9 @@ internal static class ReferenceExtensions
         delegate* <T, long, SUResult> setter,
         long value
     )
+        where T : unmanaged
     {
-        setter(reference, value).CheckError();
+        setter(reference.EnsureReferenceValid(), value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -420,9 +453,10 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, float*, SUResult> getter
     )
+        where T : unmanaged
     {
         float value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value;
     }
 
@@ -432,8 +466,9 @@ internal static class ReferenceExtensions
         delegate* <T, float, SUResult> setter,
         float value
     )
+        where T : unmanaged
     {
-        setter(reference, value).CheckError();
+        setter(reference.EnsureReferenceValid(), value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -441,10 +476,11 @@ internal static class ReferenceExtensions
         this T reference,
         delegate* <T, TValue*, SUResult> getter
     )
+        where T : unmanaged
         where TValue : unmanaged
     {
         TValue value;
-        getter(reference, &value).CheckError();
+        getter(reference.EnsureReferenceValid(), &value).CheckError();
         return value;
     }
 
@@ -455,10 +491,11 @@ internal static class ReferenceExtensions
         bool attached,
         TValue value
     )
+        where T : unmanaged
         where TRef : unmanaged
         where TValue : SUBase<TRef>
     {
-        setter(reference, value.Reference).CheckError();
+        setter(reference.EnsureReferenceValid(), value.Reference).CheckError();
         if (attached)
         {
             value.SetAttachedToModel(true);
@@ -472,10 +509,11 @@ internal static class ReferenceExtensions
         bool attached,
         TValue? value
     )
+        where T : unmanaged
         where TRef : unmanaged
         where TValue : SUBase<TRef>
     {
-        setter(reference, value?.Reference ?? default).CheckError();
+        setter(reference.EnsureReferenceValid(), value?.Reference ?? default).CheckError();
         if (attached)
         {
             value?.SetAttachedToModel(true);

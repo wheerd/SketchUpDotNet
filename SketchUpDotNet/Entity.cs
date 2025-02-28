@@ -55,5 +55,7 @@ public abstract class Entity<T> : SUBase<T>, IEntity
 
 public interface IEntity
 {
+    public int Id { get; }
+
     internal unsafe SUEntityRef EntityRef { get; }
 }
