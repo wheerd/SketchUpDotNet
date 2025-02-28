@@ -240,6 +240,22 @@ internal static class ReferenceExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static unsafe Color? GetOptionalColor<T>(
+        this T reference,
+        delegate* <T, SUColor*, SUResult> getter
+    )
+    {
+        SUColor value;
+        var result = getter(reference, &value);
+        if (result == SUResult.SU_ERROR_NO_DATA)
+        {
+            return null;
+        }
+        result.CheckError();
+        return value.ToColor();
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static unsafe void SetColor<T>(
         this T reference,
         delegate* <T, SUColor*, SUResult> setter,
@@ -305,6 +321,20 @@ internal static class ReferenceExtensions
     {
         double value;
         getter(reference, &value).CheckError();
+        return value;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static unsafe double? GetOptionalDouble<T>(
+        this T reference,
+        delegate* <T, double*, SUResult> getter
+    )
+    {
+        double value;
+        var result = getter(reference, &value);
+        if (result == SUResult.SU_ERROR_NO_DATA)
+            return null;
+        result.CheckError();
         return value;
     }
 

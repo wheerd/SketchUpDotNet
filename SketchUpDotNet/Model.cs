@@ -124,8 +124,13 @@ public class Model : SUBase<SUModelRef>
     private unsafe OptionsManager GetOptionsManager() =>
         GetOne(&SUModelGetOptionsManager, (SUOptionsManagerRef m) => new OptionsManager(m));
 
-    private unsafe LengthFormatter GetLengthFormatter() =>
-        GetOne(&SUModelGetLengthFormatter, (SULengthFormatterRef l) => new LengthFormatter(l));
+    private unsafe LengthFormatter GetLengthFormatter()
+    {
+        var formatter = new LengthFormatter();
+        fixed (SULengthFormatterRef* ptr = &formatter.Reference)
+            SUModelGetLengthFormatter(Reference, ptr).CheckError();
+        return formatter;
+    }
 
     private unsafe Camera GetCamera() =>
         GetOne(&SUModelGetCamera, (SUCameraRef c) => new Camera(c, true));

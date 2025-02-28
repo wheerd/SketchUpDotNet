@@ -30,22 +30,28 @@ public class Camera : SUBase<SUCameraRef>
         SUCameraSetOrientation(Reference, &positionSU, &targetSU, &upSU).CheckError();
     }
 
-    public double PerspectiveFrustumFOV
+    public double? PerspectiveFrustumFOV
     {
         get => GetPerspectiveFrustumFOV();
-        set => SetPerspectiveFrustumFOV(value);
+        set =>
+            SetPerspectiveFrustumFOV(
+                value ?? throw new ArgumentNullException(nameof(PerspectiveFrustumFOV))
+            );
     }
 
-    public double AspectRatio
+    public double? AspectRatio
     {
         get => GetAspectRatio();
-        set => SetAspectRatio(value);
+        set => SetAspectRatio(value ?? throw new ArgumentNullException(nameof(AspectRatio)));
     }
 
-    public double OrthographicFrustumHeight
+    public double? OrthographicFrustumHeight
     {
         get => GetOrthographicFrustumHeight();
-        set => SetOrthographicFrustumHeight(value);
+        set =>
+            SetOrthographicFrustumHeight(
+                value ?? throw new ArgumentNullException(nameof(OrthographicFrustumHeight))
+            );
     }
 
     public bool FOVIsHeight
@@ -60,18 +66,18 @@ public class Camera : SUBase<SUCameraRef>
         set => Set2D(value);
     }
 
-    private unsafe double GetPerspectiveFrustumFOV() =>
-        GetDouble(&SUCameraGetPerspectiveFrustumFOV);
+    private unsafe double? GetPerspectiveFrustumFOV() =>
+        GetOptionalDouble(&SUCameraGetPerspectiveFrustumFOV);
 
     private unsafe void SetPerspectiveFrustumFOV(double value) =>
         SetDouble(&SUCameraSetPerspectiveFrustumFOV, value);
 
-    private unsafe double GetAspectRatio() => GetDouble(&SUCameraGetAspectRatio);
+    private unsafe double? GetAspectRatio() => GetOptionalDouble(&SUCameraGetAspectRatio);
 
     private unsafe void SetAspectRatio(double value) => SetDouble(&SUCameraSetAspectRatio, value);
 
-    private unsafe double GetOrthographicFrustumHeight() =>
-        GetDouble(&SUCameraGetOrthographicFrustumHeight);
+    private unsafe double? GetOrthographicFrustumHeight() =>
+        GetOptionalDouble(&SUCameraGetOrthographicFrustumHeight);
 
     private unsafe void SetOrthographicFrustumHeight(double value) =>
         SetDouble(&SUCameraSetOrthographicFrustumHeight, value);

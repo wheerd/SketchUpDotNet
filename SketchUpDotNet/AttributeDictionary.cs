@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Linq;
 using SketchUpDotNet.Bindings;
 using static SketchUpDotNet.Bindings.Methods;
 
@@ -16,6 +19,9 @@ public class AttributeDictionary : Entity<SUAttributeDictionaryRef>
         get => Get(key);
         set => Set(key, value);
     }
+
+    public IReadOnlyDictionary<string, object?> Values =>
+        new ReadOnlyDictionary<string, object?>(Keys.Select(k => (k, Get(k))).ToDictionary());
 
     public static unsafe AttributeDictionary Create(string name)
     {

@@ -23,10 +23,10 @@ public class Edge : DrawingElement<SUEdgeRef>
 
     private unsafe Vertex GetEnd() => GetOne<SUVertexRef, Vertex>(&SUEdgeGetEndVertex, d => new(d));
 
-    public Color Color
+    public Color? Color
     {
         get => GetColor();
-        set => SetColor(value);
+        set => SetColor(value ?? throw new ArgumentNullException(nameof(Color)));
     }
 
     public bool Soft
@@ -54,7 +54,7 @@ public class Edge : DrawingElement<SUEdgeRef>
     private unsafe Face[] GetFaces() =>
         GetMany(&SUEdgeGetNumFaces, &SUEdgeGetFaces, (SUFaceRef f) => new Face(f));
 
-    private unsafe Color GetColor() => GetColor(&SUEdgeGetColor);
+    private unsafe Color? GetColor() => GetOptionalColor(&SUEdgeGetColor);
 
     private unsafe void SetColor(Color color) => SetColor(&SUEdgeSetColor, color);
 

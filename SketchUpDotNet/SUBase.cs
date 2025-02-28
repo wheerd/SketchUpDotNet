@@ -89,6 +89,10 @@ public abstract class SUBase<T> : IDisposable
         Reference.GetColor(getter);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected unsafe Color? GetOptionalColor(delegate* <T, SUColor*, SUResult> getter) =>
+        Reference.GetOptionalColor(getter);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe void SetColor(delegate* <T, SUColor*, SUResult> setter, Color value) =>
         Reference.SetColor(setter, value);
 
@@ -110,6 +114,10 @@ public abstract class SUBase<T> : IDisposable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe double GetDouble(delegate* <T, double*, SUResult> getter) =>
         Reference.GetDouble(getter);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected unsafe double? GetOptionalDouble(delegate* <T, double*, SUResult> getter) =>
+        Reference.GetOptionalDouble(getter);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe void SetDouble(delegate* <T, double, SUResult> setter, double value) =>

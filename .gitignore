@@ -11,3 +11,7 @@ x64/
 
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+
+*.skb
+
+*.received.*
