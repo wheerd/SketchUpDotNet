@@ -1,0 +1,134 @@
+﻿{
+  Radius: 3.937007874015748,
+  IsFullCircle: true,
+  StartPoint: {
+    X: 100
+  },
+  EndPoint: {
+    X: 100
+  },
+  EndAngle: 6.283185307179586,
+  XAxis: {
+    X: 100
+  },
+  YAxis: {
+    Y: 100
+  },
+  Normal: {
+    Z: 25
+  },
+  Type: SUCurveType_Arc,
+  IsPolygon: false,
+  Edges: [
+    {
+      Start: {
+        Position: {
+          X: 100
+        },
+        Id: $Entity1$
+      },
+      End: {
+        Position: {
+          X: 31,
+          Y: 95
+        },
+        Id: $Entity2$
+      },
+      Soft: false,
+      Smooth: false,
+      Hidden: false,
+      CastsShadows: true,
+      ReceivesShadows: true,
+      Id: $Entity3$
+    },
+    {
+      Start: {
+        Position: {
+          X: 31,
+          Y: 95
+        },
+        Id: $Entity2$
+      },
+      End: {
+        Position: {
+          X: -81,
+          Y: 59
+        },
+        Id: $Entity4$
+      },
+      Soft: false,
+      Smooth: false,
+      Hidden: false,
+      CastsShadows: true,
+      ReceivesShadows: true,
+      Id: $Entity5$
+    },
+    {
+      Start: {
+        Position: {
+          X: -81,
+          Y: 59
+        },
+        Id: $Entity4$
+      },
+      End: {
+        Position: {
+          X: -81,
+          Y: -59
+        },
+        Id: $Entity6$
+      },
+      Soft: false,
+      Smooth: false,
+      Hidden: false,
+      CastsShadows: true,
+      ReceivesShadows: true,
+      Id: $Entity7$
+    },
+    {
+      Start: {
+        Position: {
+          X: -81,
+          Y: -59
+        },
+        Id: $Entity6$
+      },
+      End: {
+        Position: {
+          X: 31,
+          Y: -95
+        },
+        Id: $Entity8$
+      },
+      Soft: false,
+      Smooth: false,
+      Hidden: false,
+      CastsShadows: true,
+      ReceivesShadows: true,
+      Id: $Entity9$
+    },
+    {
+      Start: {
+        Position: {
+          X: 31,
+          Y: -95
+        },
+        Id: $Entity8$
+      },
+      End: {
+        Position: {
+          X: 100
+        },
+        Id: $Entity10$
+      },
+      Soft: false,
+      Smooth: false,
+      Hidden: false,
+      CastsShadows: true,
+      ReceivesShadows: true,
+      Id: $Entity11$
+    }
+  ],
+  EdgeCount: 5,
+  Id: $Entity12$
+}

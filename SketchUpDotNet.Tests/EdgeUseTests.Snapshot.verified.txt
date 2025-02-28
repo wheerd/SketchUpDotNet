@@ -1,227 +1,227 @@
 ﻿[
   {
-    Edge: $58,
-    Loop: $66,
-    Face: $65,
-    StartVertex: $55,
+    Edge: $Edge1$,
+    Loop: $Loop1$,
+    Face: $Face1$,
+    StartVertex: $Vertex1$,
     StartVertexNormal: {
       Z: 25
     },
-    EndVertex: $56,
+    EndVertex: $Vertex2$,
     EndVertexNormal: {
       Z: 25
     },
     IsReversed: false,
     Previous: {
-      Edge: $60,
-      Loop: $66,
-      Face: $65,
-      StartVertex: $57,
+      Edge: $Edge2$,
+      Loop: $Loop1$,
+      Face: $Face1$,
+      StartVertex: $Vertex3$,
       StartVertexNormal: {
         Z: 25
       },
-      EndVertex: $55,
+      EndVertex: $Vertex1$,
       EndVertexNormal: {
         Z: 25
       },
       IsReversed: false,
       Previous: {
-        Edge: $59,
-        Loop: $66,
-        Face: $65,
-        StartVertex: $56,
+        Edge: $Edge3$,
+        Loop: $Loop1$,
+        Face: $Face1$,
+        StartVertex: $Vertex2$,
         StartVertexNormal: {
           Z: 25
         },
-        EndVertex: $57,
+        EndVertex: $Vertex3$,
         EndVertexNormal: {
           Z: 25
         },
         IsReversed: false,
-        Id: 68
+        Id: $Entity1$
       },
-      Id: 69
+      Id: $Entity2$
     },
     Next: {
-      Edge: $59,
-      Loop: $66,
-      Face: $65,
-      StartVertex: $56,
+      Edge: $Edge3$,
+      Loop: $Loop1$,
+      Face: $Face1$,
+      StartVertex: $Vertex2$,
       StartVertexNormal: {
         Z: 25
       },
-      EndVertex: $57,
+      EndVertex: $Vertex3$,
       EndVertexNormal: {
         Z: 25
       },
       IsReversed: false,
       Next: {
-        Edge: $60,
-        Loop: $66,
-        Face: $65,
-        StartVertex: $57,
+        Edge: $Edge2$,
+        Loop: $Loop1$,
+        Face: $Face1$,
+        StartVertex: $Vertex3$,
         StartVertexNormal: {
           Z: 25
         },
-        EndVertex: $55,
+        EndVertex: $Vertex1$,
         EndVertexNormal: {
           Z: 25
         },
         IsReversed: false,
-        Id: 69
+        Id: $Entity2$
       },
-      Id: 68
+      Id: $Entity1$
     },
-    Id: 67
+    Id: $Entity3$
   },
   {
-    Edge: $59,
-    Loop: $66,
-    Face: $65,
-    StartVertex: $56,
+    Edge: $Edge3$,
+    Loop: $Loop1$,
+    Face: $Face1$,
+    StartVertex: $Vertex2$,
     StartVertexNormal: {
       Z: 25
     },
-    EndVertex: $57,
+    EndVertex: $Vertex3$,
     EndVertexNormal: {
       Z: 25
     },
     IsReversed: false,
     Previous: {
-      Edge: $58,
-      Loop: $66,
-      Face: $65,
-      StartVertex: $55,
+      Edge: $Edge1$,
+      Loop: $Loop1$,
+      Face: $Face1$,
+      StartVertex: $Vertex1$,
       StartVertexNormal: {
         Z: 25
       },
-      EndVertex: $56,
+      EndVertex: $Vertex2$,
       EndVertexNormal: {
         Z: 25
       },
       IsReversed: false,
       Previous: {
-        Edge: $60,
-        Loop: $66,
-        Face: $65,
-        StartVertex: $57,
+        Edge: $Edge2$,
+        Loop: $Loop1$,
+        Face: $Face1$,
+        StartVertex: $Vertex3$,
         StartVertexNormal: {
           Z: 25
         },
-        EndVertex: $55,
+        EndVertex: $Vertex1$,
         EndVertexNormal: {
           Z: 25
         },
         IsReversed: false,
-        Id: 69
+        Id: $Entity2$
       },
-      Id: 67
+      Id: $Entity3$
     },
     Next: {
-      Edge: $60,
-      Loop: $66,
-      Face: $65,
-      StartVertex: $57,
+      Edge: $Edge2$,
+      Loop: $Loop1$,
+      Face: $Face1$,
+      StartVertex: $Vertex3$,
       StartVertexNormal: {
         Z: 25
       },
-      EndVertex: $55,
+      EndVertex: $Vertex1$,
       EndVertexNormal: {
         Z: 25
       },
       IsReversed: false,
       Next: {
-        Edge: $58,
-        Loop: $66,
-        Face: $65,
-        StartVertex: $55,
+        Edge: $Edge1$,
+        Loop: $Loop1$,
+        Face: $Face1$,
+        StartVertex: $Vertex1$,
         StartVertexNormal: {
           Z: 25
         },
-        EndVertex: $56,
+        EndVertex: $Vertex2$,
         EndVertexNormal: {
           Z: 25
         },
         IsReversed: false,
-        Id: 67
+        Id: $Entity3$
       },
-      Id: 69
+      Id: $Entity2$
     },
-    Id: 68
+    Id: $Entity1$
   },
   {
-    Edge: $60,
-    Loop: $66,
-    Face: $65,
-    StartVertex: $57,
+    Edge: $Edge2$,
+    Loop: $Loop1$,
+    Face: $Face1$,
+    StartVertex: $Vertex3$,
     StartVertexNormal: {
       Z: 25
     },
-    EndVertex: $55,
+    EndVertex: $Vertex1$,
     EndVertexNormal: {
       Z: 25
     },
     IsReversed: false,
     Previous: {
-      Edge: $59,
-      Loop: $66,
-      Face: $65,
-      StartVertex: $56,
+      Edge: $Edge3$,
+      Loop: $Loop1$,
+      Face: $Face1$,
+      StartVertex: $Vertex2$,
       StartVertexNormal: {
         Z: 25
       },
-      EndVertex: $57,
+      EndVertex: $Vertex3$,
       EndVertexNormal: {
         Z: 25
       },
       IsReversed: false,
       Previous: {
-        Edge: $58,
-        Loop: $66,
-        Face: $65,
-        StartVertex: $55,
+        Edge: $Edge1$,
+        Loop: $Loop1$,
+        Face: $Face1$,
+        StartVertex: $Vertex1$,
         StartVertexNormal: {
           Z: 25
         },
-        EndVertex: $56,
+        EndVertex: $Vertex2$,
         EndVertexNormal: {
           Z: 25
         },
         IsReversed: false,
-        Id: 67
+        Id: $Entity3$
       },
-      Id: 68
+      Id: $Entity1$
     },
     Next: {
-      Edge: $58,
-      Loop: $66,
-      Face: $65,
-      StartVertex: $55,
+      Edge: $Edge1$,
+      Loop: $Loop1$,
+      Face: $Face1$,
+      StartVertex: $Vertex1$,
       StartVertexNormal: {
         Z: 25
       },
-      EndVertex: $56,
+      EndVertex: $Vertex2$,
       EndVertexNormal: {
         Z: 25
       },
       IsReversed: false,
       Next: {
-        Edge: $59,
-        Loop: $66,
-        Face: $65,
-        StartVertex: $56,
+        Edge: $Edge3$,
+        Loop: $Loop1$,
+        Face: $Face1$,
+        StartVertex: $Vertex2$,
         StartVertexNormal: {
           Z: 25
         },
-        EndVertex: $57,
+        EndVertex: $Vertex3$,
         EndVertexNormal: {
           Z: 25
         },
         IsReversed: false,
-        Id: 68
+        Id: $Entity1$
       },
-      Id: 67
+      Id: $Entity3$
     },
-    Id: 69
+    Id: $Entity2$
   }
 ]

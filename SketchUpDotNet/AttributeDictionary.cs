@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Linq;
 using SketchUpDotNet.Bindings;
 using static SketchUpDotNet.Bindings.Methods;
 

@@ -49,15 +49,27 @@ public class Entities : SUBase<SUEntitiesRef>
         }
     }
 
-    public unsafe IEnumerable<Curve> Curves =>
+    public unsafe IEnumerable<SimpleCurve> Curves =>
         GetMany(
             &SUEntitiesGetNumCurves,
             &SUEntitiesGetCurves,
-            static (SUCurveRef e) => new Curve(e)
+            static (SUCurveRef e) => new SimpleCurve(e)
         );
     public unsafe int CurveCount => GetInt(&SUEntitiesGetNumCurves);
 
-    public unsafe void AddCurves(params Curve[] curves) => AddMany(&SUEntitiesAddCurves, curves);
+    public unsafe void AddCurves(params SimpleCurve[] curves) =>
+        AddMany(&SUEntitiesAddCurves, curves);
+
+    public unsafe IEnumerable<ArcCurve> ArcCurves =>
+        GetMany(
+            &SUEntitiesGetNumArcCurves,
+            &SUEntitiesGetArcCurves,
+            static (SUArcCurveRef e) => new ArcCurve(e)
+        );
+    public unsafe int ArcCurveCount => GetInt(&SUEntitiesGetNumArcCurves);
+
+    public unsafe void AddArcCurves(params ArcCurve[] curves) =>
+        AddMany(&SUEntitiesAddArcCurves, curves);
 
     public void Clear()
     {

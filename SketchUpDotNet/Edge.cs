@@ -18,7 +18,7 @@ public class Edge : DrawingElement<SUEdgeRef>
     public unsafe Vertex Start => GetOne<SUVertexRef, Vertex>(&SUEdgeGetStartVertex, d => new(d));
     public unsafe Vertex End => GetOne<SUVertexRef, Vertex>(&SUEdgeGetEndVertex, d => new(d));
 
-    public unsafe Curve? Curve => GetOptionalOne(&SUEdgeGetCurve, (SUCurveRef c) => new Curve(c));
+    public unsafe ICurve? Curve => GetCurve();
 
     public unsafe Color? Color
     {
@@ -54,6 +54,21 @@ public class Edge : DrawingElement<SUEdgeRef>
         bool value;
         SUEdgeReversedInFace(Reference, face.Reference, &value).CheckError();
         return value;
+    }
+
+    private unsafe ICurve? GetCurve()
+    {
+        SUCurveRef curveRef;
+        var result = SUEdgeGetCurve(Reference.EnsureReferenceValid(), &curveRef);
+        if (result == SUResult.SU_ERROR_NO_DATA)
+            return null;
+        result.CheckError();
+        var curve = ICurve.Create(curveRef);
+        if (attached)
+        {
+            curve.SetAttachedToModel(true);
+        }
+        return curve;
     }
 
     internal unsafe Edge(SUEdgeRef @ref)

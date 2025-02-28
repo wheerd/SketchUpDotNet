@@ -3,10 +3,12 @@ using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;
 
+public record struct EntityId(int Value);
+
 public abstract class Entity<T> : SUBase<T>, IEntity
     where T : unmanaged
 {
-    public int Id => GetId();
+    public EntityId Id => GetId();
 
     public IEnumerable<AttributeDictionary> AttributeDictionaries => GetAttributeDictionaries();
 
@@ -42,7 +44,7 @@ public abstract class Entity<T> : SUBase<T>, IEntity
 
     SUEntityRef IEntity.EntityRef => EntityRef;
 
-    private unsafe int GetId() => EntityRef.GetInt(&SUEntityGetID);
+    private unsafe EntityId GetId() => new(EntityRef.GetInt(&SUEntityGetID));
 
     private unsafe AttributeDictionary[] GetAttributeDictionaries() =>
         EntityRef.GetMany(
@@ -53,9 +55,9 @@ public abstract class Entity<T> : SUBase<T>, IEntity
         );
 }
 
-public interface IEntity
+public interface IEntity : IBase
 {
-    public int Id { get; }
+    public EntityId Id { get; }
 
     internal unsafe SUEntityRef EntityRef { get; }
 }

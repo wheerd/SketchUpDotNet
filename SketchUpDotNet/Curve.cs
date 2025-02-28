@@ -1,33 +1,44 @@
-using System.Drawing;
 using SketchUpDotNet.Bindings;
 using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;
 
-public class Curve : Entity<SUCurveRef>
+public abstract class Curve<T> : Entity<T>, ICurve
+    where T : unmanaged
 {
-    public static unsafe Curve Create(params Edge[] edges)
-    {
-        SUCurveRef curve;
-        SUEdgeRef[] edgeRefs = [.. edges.Select(e => e.Reference)];
-        fixed (SUEdgeRef* edgeRefsPtr = edgeRefs)
-            SUCurveCreateWithEdges(&curve, edgeRefsPtr, (nuint)edgeRefs.Length).CheckError();
-        return new(curve);
-    }
+    public unsafe SUCurveType Type => CurveRef.Get<SUCurveRef, SUCurveType>(&SUCurveGetType);
 
-    public unsafe SUCurveType Type => Get<SUCurveType>(&SUCurveGetType);
-
-    public unsafe bool IsPolygon => GetBool(&SUCurveIsPolygon);
+    public unsafe bool IsPolygon => CurveRef.GetBool(&SUCurveIsPolygon);
 
     public unsafe IEnumerable<Edge> Edges =>
-        GetMany(&SUCurveGetNumEdges, &SUCurveGetEdges, (SUEdgeRef e) => new Edge(e));
-    public unsafe int EdgeCount => GetInt(&SUCurveGetNumEdges);
+        CurveRef.GetMany(&SUCurveGetNumEdges, &SUCurveGetEdges, (SUEdgeRef e) => new Edge(e), true);
+    public unsafe int EdgeCount => CurveRef.GetInt(&SUCurveGetNumEdges);
 
-    internal unsafe Curve(SUCurveRef @ref)
+    internal unsafe Curve(T @ref)
         : base(@ref) { }
 
-    protected sealed override unsafe delegate* <SUCurveRef*, SUResult> Release => &SUCurveRelease;
+    private SUCurveRef? curveRef;
 
-    protected sealed override unsafe delegate* <SUCurveRef, SUEntityRef> ToEntity =>
-        &SUCurveToEntity;
+    protected abstract unsafe delegate* <T, SUCurveRef> ToCurve { get; }
+
+    private unsafe SUCurveRef CurveRef => curveRef ??= ToCurve(Reference);
+}
+
+public interface ICurve : IEntity
+{
+    internal static unsafe ICurve Create(SUCurveRef @ref)
+    {
+        return @ref.Get<SUCurveRef, SUCurveType>(&SUCurveGetType) switch
+        {
+            SUCurveType.SUCurveType_Arc => new ArcCurve(SUArcCurveFromCurve(@ref)),
+            _ => new SimpleCurve(@ref),
+        };
+    }
+
+    public unsafe SUCurveType Type { get; }
+
+    public unsafe bool IsPolygon { get; }
+
+    public unsafe IEnumerable<Edge> Edges { get; }
+    public unsafe int EdgeCount { get; }
 }

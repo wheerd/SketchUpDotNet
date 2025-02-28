@@ -1,4 +1,3 @@
-using System.Reflection;
 using SketchUpDotNet.Bindings;
 using static SketchUpDotNet.Bindings.Methods;
 

@@ -4,7 +4,7 @@ using SketchUpDotNet.Bindings;
 
 namespace SketchUpDotNet;
 
-public abstract class SUBase<T> : IDisposable
+public abstract class SUBase<T> : IDisposable, IBase
     where T : unmanaged
 {
     internal T Reference;
@@ -243,6 +243,8 @@ public abstract class SUBase<T> : IDisposable
             return ((long)((GenericRef*)referencePtr)->ptr).GetHashCode();
     }
 
+    void IBase.SetAttachedToModel(bool attached) => SetAttachedToModel(attached);
+
     public static bool operator ==(SUBase<T>? left, SUBase<T>? right)
     {
         if (left is null && right is null)
@@ -260,6 +262,11 @@ public abstract class SUBase<T> : IDisposable
             return true;
         return !left.Equals(right);
     }
+}
+
+public interface IBase
+{
+    internal void SetAttachedToModel(bool attached);
 }
 
 unsafe struct GenericRef
