@@ -10,9 +10,9 @@ public readonly struct Vector3D
         : this(
             new SUVector3D()
             {
-                x = x,
-                y = y,
-                z = z,
+                x = x.ToSULength(),
+                y = y.ToSULength(),
+                z = z.ToSULength(),
             }
         ) { }
 
@@ -219,7 +219,14 @@ public readonly struct Vector3D
     internal SUVector3D ToSU() => _su;
 
     internal Vector3D(double[] values)
-        : this(values[0], values[1], values[2])
+        : this(
+            new SUVector3D()
+            {
+                x = values[0],
+                y = values[1],
+                z = values[2],
+            }
+        )
     {
         Debug.Assert(values.Length == 3);
     }

@@ -4,28 +4,94 @@ using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;
 
-public readonly record struct Point3D(double X, double Y, double Z)
+public readonly struct Point3D
 {
-    internal Point3D(SUPoint3D su)
-        : this(su.x.FromSULength(), su.y.FromSULength(), su.z.FromSULength()) { }
+    public Point3D(double x, double y, double z)
+        : this(
+            new SUPoint3D()
+            {
+                x = x.ToSULength(),
+                y = y.ToSULength(),
+                z = z.ToSULength(),
+            }
+        ) { }
+
+    public double X => _su.x.FromSULength();
+    public double Y => _su.y.FromSULength();
+    public double Z => _su.z.FromSULength();
 
     public unsafe Point3D Transform(SUTransformation t)
     {
-        SUPoint3D su = ToSU();
+        SUPoint3D su = _su;
         SUPoint3DTransform(&t, &su).CheckError();
         return new(su);
     }
 
-    internal SUPoint3D ToSU() =>
-        new()
+    public unsafe Point3D Offset(Vector3D offset)
+    {
+        SUPoint3D newPoint;
+        SUVector3D vec = offset.ToSU();
+        fixed (SUPoint3D* su = &_su)
+            SUPoint3DOffset(su, &vec, &newPoint).CheckError();
+        return new(newPoint);
+    }
+
+    public unsafe double Distance(Point3D other)
+    {
+        double dist;
+        fixed (SUPoint3D* su = &_su)
+            SUPoint3DDistanceToSUPoint3D(su, &other._su, &dist).CheckError();
+        return dist;
+    }
+
+    public override unsafe bool Equals(object? obj)
+    {
+        if (obj is Point3D other)
         {
-            x = X.ToSULength(),
-            y = Y.ToSULength(),
-            z = Z.ToSULength(),
-        };
+            bool equal;
+            fixed (SUPoint3D* su = &_su)
+                SUPoint3DGetEqual(su, &other._su, &equal).CheckError();
+            return equal;
+        }
+        return false;
+    }
+
+    public unsafe bool LessThan(Point3D other)
+    {
+        bool equal;
+        fixed (SUPoint3D* su = &_su)
+            SUPoint3DLessThan(su, &other._su, &equal).CheckError();
+        return equal;
+    }
+
+    public override int GetHashCode() => _su.GetHashCode();
+
+    public static bool operator ==(Point3D left, Point3D right) => left.Equals(right);
+
+    public static bool operator !=(Point3D left, Point3D right) => !left.Equals(right);
+
+    public static bool operator <(Point3D left, Point3D right) => left.LessThan(right);
+
+    public static bool operator >(Point3D left, Point3D right) => right.LessThan(left);
+
+    private readonly SUPoint3D _su;
+
+    internal Point3D(SUPoint3D su)
+    {
+        _su = su;
+    }
+
+    internal SUPoint3D ToSU() => _su;
 
     internal Point3D(double[] values)
-        : this(values[0].FromSULength(), values[1].FromSULength(), values[2].FromSULength())
+        : this(
+            new SUPoint3D()
+            {
+                x = values[0],
+                y = values[1],
+                z = values[2],
+            }
+        )
     {
         Debug.Assert(values.Length == 3);
     }
