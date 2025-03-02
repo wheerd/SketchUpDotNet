@@ -5,11 +5,11 @@
     Face: $Face1$,
     StartVertex: $Vertex1$,
     StartVertexNormal: {
-      Z: 25
+      Z: 0.0254
     },
     EndVertex: $Vertex2$,
     EndVertexNormal: {
-      Z: 25
+      Z: 0.0254
     },
     IsReversed: false,
     Previous: {
@@ -18,11 +18,11 @@
       Face: $Face1$,
       StartVertex: $Vertex3$,
       StartVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       EndVertex: $Vertex1$,
       EndVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       IsReversed: false,
       Previous: {
@@ -31,11 +31,11 @@
         Face: $Face1$,
         StartVertex: $Vertex2$,
         StartVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         EndVertex: $Vertex3$,
         EndVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         IsReversed: false,
         Id: $Entity1$
@@ -48,11 +48,11 @@
       Face: $Face1$,
       StartVertex: $Vertex2$,
       StartVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       EndVertex: $Vertex3$,
       EndVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       IsReversed: false,
       Next: {
@@ -61,11 +61,11 @@
         Face: $Face1$,
         StartVertex: $Vertex3$,
         StartVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         EndVertex: $Vertex1$,
         EndVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         IsReversed: false,
         Id: $Entity2$
@@ -80,11 +80,11 @@
     Face: $Face1$,
     StartVertex: $Vertex2$,
     StartVertexNormal: {
-      Z: 25
+      Z: 0.0254
     },
     EndVertex: $Vertex3$,
     EndVertexNormal: {
-      Z: 25
+      Z: 0.0254
     },
     IsReversed: false,
     Previous: {
@@ -93,11 +93,11 @@
       Face: $Face1$,
       StartVertex: $Vertex1$,
       StartVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       EndVertex: $Vertex2$,
       EndVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       IsReversed: false,
       Previous: {
@@ -106,11 +106,11 @@
         Face: $Face1$,
         StartVertex: $Vertex3$,
         StartVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         EndVertex: $Vertex1$,
         EndVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         IsReversed: false,
         Id: $Entity2$
@@ -123,11 +123,11 @@
       Face: $Face1$,
       StartVertex: $Vertex3$,
       StartVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       EndVertex: $Vertex1$,
       EndVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       IsReversed: false,
       Next: {
@@ -136,11 +136,11 @@
         Face: $Face1$,
         StartVertex: $Vertex1$,
         StartVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         EndVertex: $Vertex2$,
         EndVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         IsReversed: false,
         Id: $Entity3$
@@ -155,11 +155,11 @@
     Face: $Face1$,
     StartVertex: $Vertex3$,
     StartVertexNormal: {
-      Z: 25
+      Z: 0.0254
     },
     EndVertex: $Vertex1$,
     EndVertexNormal: {
-      Z: 25
+      Z: 0.0254
     },
     IsReversed: false,
     Previous: {
@@ -168,11 +168,11 @@
       Face: $Face1$,
       StartVertex: $Vertex2$,
       StartVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       EndVertex: $Vertex3$,
       EndVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       IsReversed: false,
       Previous: {
@@ -181,11 +181,11 @@
         Face: $Face1$,
         StartVertex: $Vertex1$,
         StartVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         EndVertex: $Vertex2$,
         EndVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         IsReversed: false,
         Id: $Entity3$
@@ -198,11 +198,11 @@
       Face: $Face1$,
       StartVertex: $Vertex1$,
       StartVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       EndVertex: $Vertex2$,
       EndVertexNormal: {
-        Z: 25
+        Z: 0.0254
       },
       IsReversed: false,
       Next: {
@@ -211,11 +211,11 @@
         Face: $Face1$,
         StartVertex: $Vertex2$,
         StartVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         EndVertex: $Vertex3$,
         EndVertexNormal: {
-          Z: 25
+          Z: 0.0254
         },
         IsReversed: false,
         Id: $Entity1$

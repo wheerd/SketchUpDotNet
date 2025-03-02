@@ -1,36 +1,32 @@
+using System.Diagnostics;
 using SketchUpDotNet.Bindings;
 using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;
 
-public readonly record struct Vector3D(int X, int Y, int Z)
+public readonly record struct Vector3D(double X, double Y, double Z)
 {
+    internal Vector3D(SUVector3D su)
+        : this(su.x.FromSULength(), su.y.FromSULength(), su.z.FromSULength()) { }
+
     public unsafe Vector3D Transform(SUTransformation t)
     {
         SUVector3D su = ToSU();
         SUVector3DTransform(&t, &su).CheckError();
-        return FromSU(su);
+        return new(su);
     }
 
     internal SUVector3D ToSU() =>
         new()
         {
-            x = X * SketchUp.MM_TO_INCH,
-            y = Y * SketchUp.MM_TO_INCH,
-            z = Z * SketchUp.MM_TO_INCH,
+            x = X.ToSULength(),
+            y = Y.ToSULength(),
+            z = Z.ToSULength(),
         };
 
-    internal static Vector3D FromSU(SUVector3D vector) =>
-        new(
-            (int)Math.Round(vector.x / SketchUp.MM_TO_INCH),
-            (int)Math.Round(vector.y / SketchUp.MM_TO_INCH),
-            (int)Math.Round(vector.z / SketchUp.MM_TO_INCH)
-        );
-
-    internal static Vector3D FromVector(double[] values) =>
-        new(
-            (int)Math.Round(values[0] / SketchUp.MM_TO_INCH),
-            (int)Math.Round(values[1] / SketchUp.MM_TO_INCH),
-            (int)Math.Round(values[2] / SketchUp.MM_TO_INCH)
-        );
+    internal Vector3D(double[] values)
+        : this(values[0].FromSULength(), values[1].FromSULength(), values[2].FromSULength())
+    {
+        Debug.Assert(values.Length == 3);
+    }
 }

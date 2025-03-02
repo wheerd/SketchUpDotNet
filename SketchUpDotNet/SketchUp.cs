@@ -4,7 +4,33 @@ namespace SketchUpDotNet;
 
 public static class SketchUp
 {
-    public const double MM_TO_INCH = 1 / 25.4;
+    public static LengthUnit LengthUnit { get; set; } = LengthUnit.Meter;
+
+    public static double FromSULength(this double value) =>
+        value
+        * LengthUnit switch
+        {
+            LengthUnit.Inch => 1.0,
+            LengthUnit.Feet => 1 / 12.0,
+            LengthUnit.Yard => 1 / 36.0,
+            LengthUnit.Millimeter => 25.4,
+            LengthUnit.Centimeter => 2.54,
+            LengthUnit.Meter => 0.0254,
+            _ => throw new NotImplementedException(),
+        };
+
+    public static double ToSULength(this double value) =>
+        value
+        * LengthUnit switch
+        {
+            LengthUnit.Inch => 1.0,
+            LengthUnit.Feet => 12.0,
+            LengthUnit.Yard => 36.0,
+            LengthUnit.Millimeter => 1 / 25.4,
+            LengthUnit.Centimeter => 10 / 25.4,
+            LengthUnit.Meter => 1000 / 25.4,
+            _ => throw new NotImplementedException(),
+        };
 
     private static readonly Destructor destructor = new();
 
@@ -20,4 +46,14 @@ public static class SketchUp
             SUTerminate();
         }
     }
+}
+
+public enum LengthUnit
+{
+    Inch,
+    Feet,
+    Yard,
+    Millimeter,
+    Centimeter,
+    Meter,
 }

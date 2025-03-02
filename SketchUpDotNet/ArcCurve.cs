@@ -23,18 +23,18 @@ public class ArcCurve : Curve<SUArcCurveRef>
         return new(curve);
     }
 
-    public unsafe double Radius => GetDouble(&SUArcCurveGetRadius);
+    public unsafe double Radius => GetDouble(&SUArcCurveGetRadius).FromSULength();
     public unsafe bool IsFullCircle => GetBool(&SUArcCurveGetIsFullCircle);
 
-    public unsafe Point3D StartPoint => Point3D.FromSU(Get<SUPoint3D>(&SUArcCurveGetStartPoint));
+    public unsafe Point3D StartPoint => new(Get<SUPoint3D>(&SUArcCurveGetStartPoint));
     public unsafe double StartAngle => GetDouble(&SUArcCurveGetStartAngle);
-    public unsafe Point3D EndPoint => Point3D.FromSU(Get<SUPoint3D>(&SUArcCurveGetEndPoint));
+    public unsafe Point3D EndPoint => new(Get<SUPoint3D>(&SUArcCurveGetEndPoint));
     public unsafe double EndAngle => GetDouble(&SUArcCurveGetEndAngle);
-    public unsafe Point3D Center => Point3D.FromSU(Get<SUPoint3D>(&SUArcCurveGetCenter));
+    public unsafe Point3D Center => new(Get<SUPoint3D>(&SUArcCurveGetCenter));
 
-    public unsafe Vector3D XAxis => Vector3D.FromSU(Get<SUVector3D>(&SUArcCurveGetXAxis));
-    public unsafe Vector3D YAxis => Vector3D.FromSU(Get<SUVector3D>(&SUArcCurveGetYAxis));
-    public unsafe Vector3D Normal => Vector3D.FromSU(Get<SUVector3D>(&SUArcCurveGetNormal));
+    public unsafe Vector3D XAxis => new(Get<SUVector3D>(&SUArcCurveGetXAxis));
+    public unsafe Vector3D YAxis => new(Get<SUVector3D>(&SUArcCurveGetYAxis));
+    public unsafe Vector3D Normal => new(Get<SUVector3D>(&SUArcCurveGetNormal));
 
     internal unsafe ArcCurve(SUArcCurveRef @ref)
         : base(@ref) { }

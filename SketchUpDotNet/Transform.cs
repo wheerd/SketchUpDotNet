@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Runtime.InteropServices;
 using SketchUpDotNet.Bindings;
 using static SketchUpDotNet.Bindings.Methods;
@@ -13,30 +14,20 @@ public static class Transform
         return t;
     }
 
-    public static unsafe SUTransformation Translate(int x, int y, int z)
+    public static unsafe SUTransformation Translate(Vector3D vector)
     {
-        SUVector3D vector = new()
-        {
-            x = x * SketchUp.MM_TO_INCH,
-            y = y * SketchUp.MM_TO_INCH,
-            z = z * SketchUp.MM_TO_INCH,
-        };
+        SUVector3D vectorSU = vector.ToSU();
         SUTransformation t;
-        SUTransformationTranslation(&t, &vector);
+        SUTransformationTranslation(&t, &vectorSU);
         return t;
     }
 
-    public static unsafe SUTransformation Rotation(Point3D point, int x, int y, int z, double angle)
+    public static unsafe SUTransformation Rotation(Point3D point, Vector3D vector, double angle)
     {
         SUPoint3D pointSU = point.ToSU();
-        SUVector3D vector = new()
-        {
-            x = x * SketchUp.MM_TO_INCH,
-            y = y * SketchUp.MM_TO_INCH,
-            z = z * SketchUp.MM_TO_INCH,
-        };
+        SUVector3D vectorSU = vector.ToSU();
         SUTransformation t;
-        SUTransformationRotation(&t, &pointSU, &vector, angle);
+        SUTransformationRotation(&t, &pointSU, &vectorSU, angle);
         return t;
     }
 

@@ -12,11 +12,10 @@ public class EdgeUse : Entity<SUEdgeUseRef>
     public unsafe Vertex StartVertex =>
         GetOne(&SUEdgeUseGetStartVertex, (SUVertexRef v) => new Vertex(v));
     public unsafe Vector3D StartVertexNormal =>
-        Vector3D.FromSU(Get<SUVector3D>(&SUEdgeUseGetStartVertexNormal));
+        new(Get<SUVector3D>(&SUEdgeUseGetStartVertexNormal));
     public unsafe Vertex EndVertex =>
         GetOne(&SUEdgeUseGetEndVertex, (SUVertexRef v) => new Vertex(v));
-    public unsafe Vector3D EndVertexNormal =>
-        Vector3D.FromSU(Get<SUVector3D>(&SUEdgeUseGetEndVertexNormal));
+    public unsafe Vector3D EndVertexNormal => new(Get<SUVector3D>(&SUEdgeUseGetEndVertexNormal));
 
     public unsafe IEnumerable<EdgeUse> Partners =>
         GetMany(

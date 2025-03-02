@@ -17,9 +17,9 @@ public class Camera : SUBase<SUCameraRef>
         SUPoint3D targetSU;
         SUVector3D upSU;
         SUCameraGetOrientation(Reference, &positionSU, &targetSU, &upSU).CheckError();
-        position = Point3D.FromSU(positionSU);
-        target = Point3D.FromSU(targetSU);
-        up = Vector3D.FromSU(upSU);
+        position = new Point3D(positionSU);
+        target = new Point3D(targetSU);
+        up = new Vector3D(upSU);
     }
 
     public unsafe void SetOrientation(Point3D position, Point3D target, Vector3D up)

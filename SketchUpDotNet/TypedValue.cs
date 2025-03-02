@@ -105,7 +105,7 @@ public class TypedValue : SUBase<SUTypedValueRef>
                 {
                     SUTypedValueGetVector3d(Reference, vectorPtr).CheckError();
                 }
-                return Point3D.FromVector(vector);
+                return new Point3D(vector);
             case SUTypedValueType.SUTypedValueType_Array:
                 return GetMany(
                         &SUTypedValueGetNumArrayItems,

@@ -410,7 +410,7 @@ internal static class ReferenceExtensions
         {
             getter(reference.EnsureReferenceValid(), vectorPtr).CheckError();
         }
-        return Point3D.FromVector(vector);
+        return new(vector);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
