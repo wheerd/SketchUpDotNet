@@ -10,13 +10,22 @@
   },
   EndAngle: 6.283185307179586,
   XAxis: {
-    X: 100.0
+    X: 100.0,
+    Length: 100.0,
+    IsValid: true,
+    IsUnitVector: false
   },
   YAxis: {
-    Y: 100.0
+    Y: 100.0,
+    Length: 100.0,
+    IsValid: true,
+    IsUnitVector: false
   },
   Normal: {
-    Z: 0.0254
+    Z: 0.0254,
+    Length: 0.0254,
+    IsValid: true,
+    IsUnitVector: true
   },
   Type: SUCurveType_Arc,
   IsPolygon: false,

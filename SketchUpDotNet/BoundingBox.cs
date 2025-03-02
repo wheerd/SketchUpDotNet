@@ -13,5 +13,5 @@ public readonly record struct BoundingBox(Point3D Min, Point3D Max)
 
     public Point3D Center => new((Min.X + Max.X) / 2, (Min.Y + Max.Y) / 2, (Min.Z + Max.Z) / 2);
 
-    public Vector3D Size => new(Max.X - Min.X, Max.Y - Min.Y, Max.Z - Min.Z);
+    public Vector3D Size => Vector3D.Create(Min, Max);
 }
