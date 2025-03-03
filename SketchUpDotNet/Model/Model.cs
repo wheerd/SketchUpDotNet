@@ -54,6 +54,9 @@ public class SketchUpModel : SUBase<SUModelRef>
     public unsafe void AddMaterials(params Material[] materials) =>
         AddMany(&SUModelAddMaterials, materials);
 
+    public unsafe IEnumerable<Font> Fonts =>
+        GetMany(&SUModelGetNumFonts, &SUModelGetFonts, (SUFontRef f) => new Font(f));
+
     public IEnumerable<AttributeDictionary> AttributeDictionaries => GetAttributeDictionaries();
 
     public unsafe AttributeDictionary GetAttributeDictionary(string name)

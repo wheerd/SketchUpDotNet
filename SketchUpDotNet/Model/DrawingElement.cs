@@ -99,7 +99,7 @@ public abstract class DrawingElement<T> : Entity<T>, IDrawingElement
         SUDrawingElementSetLayer(ElementRef, layer.Reference).CheckError();
 }
 
-public interface IDrawingElement
+public interface IDrawingElement : IEntity
 {
     public Layer Layer { get; set; }
 

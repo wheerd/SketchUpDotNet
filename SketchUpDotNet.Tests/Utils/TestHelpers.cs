@@ -27,7 +27,10 @@ public static class TestHelpers
                 new EntityConverter<Group>(idSource),
                 new EntityConverter<ComponentInstance>(idSource),
                 new EntityConverter<ArcCurve>(idSource),
-                new EntityConverter<SimpleCurve>(idSource)
+                new EntityConverter<SimpleCurve>(idSource),
+                new EntityConverter<DimensionLinear>(idSource),
+                new EntityConverter<DimensionRadial>(idSource),
+                new EntityConverter<Font>(idSource)
             )
         );
         return idSource;

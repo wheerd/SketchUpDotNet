@@ -44,7 +44,7 @@ public abstract class SUBase<T> : IDisposable, IBase
         Func<TElement, TOut> construct
     )
         where TElement : unmanaged
-        where TOut : SUBase<TElement> =>
+        where TOut : IBase =>
         Reference.GetMany(getCount, get, construct, attached || this is SketchUpModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

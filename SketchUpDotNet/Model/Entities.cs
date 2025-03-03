@@ -71,6 +71,13 @@ public class Entities : SUBase<SUEntitiesRef>
     public unsafe void AddArcCurves(params ArcCurve[] curves) =>
         AddMany(&SUEntitiesAddArcCurves, curves);
 
+    public unsafe IEnumerable<IDimension> Dimensions =>
+        GetMany(
+            &SUEntitiesGetNumDimensions,
+            &SUEntitiesGetDimensions,
+            (SUDimensionRef d) => IDimension.Create(d)
+        );
+
     public void Clear()
     {
         SUEntitiesClear(Reference).CheckError();

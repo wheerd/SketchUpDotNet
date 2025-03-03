@@ -51,7 +51,7 @@ internal static class ReferenceExtensions
     )
         where T : unmanaged
         where TElement : unmanaged
-        where TOut : SUBase<TElement>
+        where TOut : IBase
     {
         nuint num;
         getCount(reference.EnsureReferenceValid(), &num).CheckError();

@@ -5137,6 +5137,17 @@
     [Chris_Hair],
     [Chris_Pants]
   ],
+  Fonts: [
+    {
+      FaceName: Tahoma,
+      PointSize: 12,
+      IsBold: false,
+      IsItalic: false,
+      UseWorldSize: false,
+      WorldSize: 10.0,
+      Id: $Font61$
+    }
+  ],
   AttributeDictionaries: [
     {
       Name: temp,
@@ -5147,7 +5158,7 @@
       Values: {
         temp: 0
       },
-      Id: $Entity61$
+      Id: $Entity62$
     },
     {
       Name: GeoReference,
@@ -5170,7 +5181,7 @@
         ModelTranslationY: -174402260.58333763,
         UsesGeoReferencing: false
       },
-      Id: $Entity62$
+      Id: $Entity63$
     },
     {
       Name: GSU_ContributorsInfo,
@@ -5183,7 +5194,7 @@
         LastModifiedByKey: ,
         VersionKey: 1000
       },
-      Id: $Entity63$
+      Id: $Entity64$
     }
   ]
 }
