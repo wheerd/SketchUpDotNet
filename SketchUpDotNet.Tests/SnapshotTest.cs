@@ -1,27 +1,36 @@
-﻿namespace SketchUpDotNet.Tests;
+﻿using SketchUpDotNet.Tests.Utils;
+
+namespace SketchUpDotNet.Tests;
 
 public class SnapshotTest
 {
     readonly VerifySettings settings = new();
 
+    private readonly EntityIdSource idSource;
+
     public SnapshotTest()
     {
-        settings.IgnoreMembers<Vertex>(_ => _.Faces, _ => _.Edges, _ => _.Loops);
-        settings.IgnoreMembers<Loop>(_ => _.Edges, _ => _.Face);
-        settings.IgnoreMembers<Edge>(_ => _.Faces, _ => _.Curve);
-        settings.IgnoreMembers<Component>(_ => _.Instances);
-        settings.IgnoreMembers<EdgeUse>(
-            _ => _.Face,
-            _ => _.Edge,
-            _ => _.Loop,
-            _ => _.Partners,
-            _ => _.Previous,
-            _ => _.Next
+        idSource = settings.EntityIdHandling();
+        settings.AddExtraSettings(_ =>
+            _.Converters.AddRange(
+                new LayerNameConverter(),
+                new MaterialNameConverter(),
+                new VertexConverter()
+            )
         );
+        settings.IgnoreMembers<Component>(_ => _.Instances);
+        settings.IgnoreMembers<ComponentInstance>(_ => _.Definition);
+        settings.IgnoreMembers<EdgeUse>(_ => _.Partners);
+    }
+
+    [SetUp]
+    public void Setup()
+    {
+        idSource.Reset();
     }
 
     [Test]
-    public Task Empty_Snapshot()
+    public async Task Empty_Snapshot()
     {
         // Arrange
         string path = Path.Combine(
@@ -33,6 +42,6 @@ public class SnapshotTest
         using var result = Model.Load(path);
 
         // Assert
-        return Verify(result, settings);
+        await Verify(result, settings).DisableDiff();
     }
 }

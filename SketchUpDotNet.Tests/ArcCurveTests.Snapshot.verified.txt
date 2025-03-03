@@ -4,11 +4,13 @@
   StartPoint: {
     X: 100.0
   },
+  StartAngle: 0.0,
   EndPoint: {
     X: 100.0,
     Y: -2.4492935982947064E-14
   },
   EndAngle: 6.283185307179586,
+  Center: {},
   XAxis: {
     X: 100.0,
     Length: 100.0,
@@ -35,111 +37,92 @@
         Position: {
           X: 100.0
         },
-        Id: $Entity1$
+        Id: $Vertex3$
       },
       End: {
         Position: {
           X: 30.901699437494745,
           Y: 95.10565162951536
         },
-        Id: $Entity2$
+        Id: $Vertex4$
       },
       Soft: false,
       Smooth: false,
+      FaceCount: 0,
       Hidden: false,
       CastsShadows: true,
       ReceivesShadows: true,
-      Id: $Entity3$
+      Id: $Edge2$
     },
     {
-      Start: {
-        Position: {
-          X: 30.901699437494745,
-          Y: 95.10565162951536
-        },
-        Id: $Entity2$
-      },
+      Start: $Vertex4$,
       End: {
         Position: {
           X: -80.90169943749474,
           Y: 58.77852522924733
         },
-        Id: $Entity4$
+        Id: $Vertex6$
       },
       Soft: false,
       Smooth: false,
+      FaceCount: 0,
       Hidden: false,
       CastsShadows: true,
       ReceivesShadows: true,
-      Id: $Entity5$
+      Id: $Edge5$
     },
     {
-      Start: {
-        Position: {
-          X: -80.90169943749474,
-          Y: 58.77852522924733
-        },
-        Id: $Entity4$
-      },
+      Start: $Vertex6$,
       End: {
         Position: {
           X: -80.90169943749474,
           Y: -58.77852522924731
         },
-        Id: $Entity6$
+        Id: $Vertex8$
       },
       Soft: false,
       Smooth: false,
+      FaceCount: 0,
       Hidden: false,
       CastsShadows: true,
       ReceivesShadows: true,
-      Id: $Entity7$
+      Id: $Edge7$
     },
     {
-      Start: {
-        Position: {
-          X: -80.90169943749474,
-          Y: -58.77852522924731
-        },
-        Id: $Entity6$
-      },
+      Start: $Vertex8$,
       End: {
         Position: {
           X: 30.901699437494724,
           Y: -95.10565162951536
         },
-        Id: $Entity8$
+        Id: $Vertex10$
       },
       Soft: false,
       Smooth: false,
+      FaceCount: 0,
       Hidden: false,
       CastsShadows: true,
       ReceivesShadows: true,
-      Id: $Entity9$
+      Id: $Edge9$
     },
     {
-      Start: {
-        Position: {
-          X: 30.901699437494724,
-          Y: -95.10565162951536
-        },
-        Id: $Entity8$
-      },
+      Start: $Vertex10$,
       End: {
         Position: {
           X: 100.0,
           Y: -2.4492935982947064E-14
         },
-        Id: $Entity10$
+        Id: $Vertex12$
       },
       Soft: false,
       Smooth: false,
+      FaceCount: 0,
       Hidden: false,
       CastsShadows: true,
       ReceivesShadows: true,
-      Id: $Entity11$
+      Id: $Edge11$
     }
   ],
   EdgeCount: 5,
-  Id: $Entity12$
+  Id: $ArcCurve1$
 }

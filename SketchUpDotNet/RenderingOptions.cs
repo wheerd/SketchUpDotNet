@@ -1,14 +1,14 @@
-using System.Collections;
 using SketchUpDotNet.Bindings;
 using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;
 
-public class RenderingOptions
-    : SUBase<SURenderingOptionsRef>,
-        IEnumerable<KeyValuePair<string, object?>>
+public class RenderingOptions : SUBase<SURenderingOptionsRef>
 {
     public ICollection<string> Keys => GetKeys();
+
+    public IReadOnlyDictionary<string, object?> Values =>
+        Keys.Select(k => (k, Get(k))).ToDictionary().AsReadOnly();
 
     public int Count => GetCount();
 
@@ -49,19 +49,6 @@ public class RenderingOptions
             result.CheckError();
         }
         return typedValue.ToObject();
-    }
-
-    public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
-    {
-        foreach (var key in GetKeys())
-        {
-            yield return new(key, Get(key));
-        }
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
     }
 
     protected sealed override unsafe delegate* <SURenderingOptionsRef*, SUResult> Release => null;

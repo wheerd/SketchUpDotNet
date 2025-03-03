@@ -1,12 +1,9 @@
-using System.Collections;
 using SketchUpDotNet.Bindings;
 using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;
 
-public class OptionsProvider
-    : SUBase<SUOptionsProviderRef>,
-        IEnumerable<KeyValuePair<string, object?>>
+public class OptionsProvider : SUBase<SUOptionsProviderRef>
 {
     internal OptionsProvider(SUOptionsProviderRef @ref)
         : base(@ref) { }
@@ -14,6 +11,9 @@ public class OptionsProvider
     public string Name => GetName();
 
     public ICollection<string> Keys => GetKeys();
+
+    public IReadOnlyDictionary<string, object?> Values =>
+        Keys.Select(k => (k, Get(k))).ToDictionary().AsReadOnly();
 
     public int Count => GetCount();
 
@@ -53,19 +53,6 @@ public class OptionsProvider
             result.CheckError();
         }
         return typedValue.ToObject();
-    }
-
-    public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
-    {
-        foreach (var key in GetKeys())
-        {
-            yield return new(key, Get(key));
-        }
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
     }
 
     protected sealed override unsafe delegate* <SUOptionsProviderRef*, SUResult> Release => null;

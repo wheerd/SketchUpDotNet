@@ -1,3 +1,5 @@
+using SketchUpDotNet.Tests.Utils;
+
 namespace SketchUpDotNet.Tests;
 
 [TestFixture]
@@ -21,14 +23,16 @@ public class EdgeUseTests
     }
 
     [Test]
-    public Task Snapshot()
+    public async Task Snapshot()
     {
         // Arrange
         VerifySettings settings = new();
+        settings.EntityIdHandling();
         settings.IgnoreAllButId<Face>();
         settings.IgnoreAllButId<Edge>();
         settings.IgnoreAllButId<Loop>();
         settings.IgnoreAllButId<Vertex>();
+        settings.IgnoreMembers<EdgeUse>(_ => _.Partners, _ => _.Previous, _ => _.Next);
 
         // Unless owned by model the edge uses are freed immediately.
         using var model = new Model();
@@ -39,6 +43,6 @@ public class EdgeUseTests
         var result = face.OuterLoop.EdgeUses.ToList();
 
         // Assert
-        return Verify(result, settings);
+        await Verify(result, settings);
     }
 }

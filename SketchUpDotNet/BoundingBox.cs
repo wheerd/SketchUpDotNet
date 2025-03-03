@@ -2,10 +2,17 @@ using SketchUpDotNet.Bindings;
 
 namespace SketchUpDotNet;
 
-public readonly record struct BoundingBox(Point3D Min, Point3D Max)
+public sealed class BoundingBox
 {
-    internal static BoundingBox FromSU(SUBoundingBox3D bb) =>
-        new(new Point3D(bb.min_point), new Point3D(bb.max_point));
+    private readonly SUBoundingBox3D _su;
+
+    internal BoundingBox(SUBoundingBox3D su)
+    {
+        _su = su;
+    }
+
+    public Point3D Min => new(_su.min_point);
+    public Point3D Max => new(_su.max_point);
 
     public double SizeX => Max.X - Min.X;
     public double SizeY => Max.Y - Min.Y;

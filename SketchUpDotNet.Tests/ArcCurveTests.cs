@@ -1,3 +1,5 @@
+using SketchUpDotNet.Tests.Utils;
+
 namespace SketchUpDotNet.Tests;
 
 [TestFixture]
@@ -8,6 +10,7 @@ public class ArcCurveTests
     {
         // Arrange
         VerifySettings settings = new();
+        settings.EntityIdHandling();
         settings.IgnoreMembers<Edge>(_ => _.Curve, _ => _.Faces);
         settings.IgnoreMembers<Vertex>(_ => _.Edges, _ => _.Loops, _ => _.Faces);
         settings.IgnoreMembersWithType<BoundingBox>();

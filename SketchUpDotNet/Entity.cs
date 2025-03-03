@@ -3,7 +3,7 @@ using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;
 
-public record struct EntityId(int Value);
+public readonly record struct EntityId(int Value);
 
 public abstract class Entity<T> : SUBase<T>, IEntity
     where T : unmanaged

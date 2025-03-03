@@ -82,12 +82,17 @@ public abstract class DrawingElement<T> : Entity<T>, IDrawingElement
         SUDrawingElementSetMaterial(ElementRef, material?.Reference ?? default).CheckError();
 
     private unsafe BoundingBox GetBoundingBox() =>
-        BoundingBox.FromSU(
-            ElementRef.Get<SUDrawingElementRef, SUBoundingBox3D>(&SUDrawingElementGetBoundingBox)
-        );
+        new(ElementRef.Get<SUDrawingElementRef, SUBoundingBox3D>(&SUDrawingElementGetBoundingBox));
 
     private unsafe Layer GetLayer() =>
-        ElementRef.GetOne(&SUDrawingElementGetLayer, (SULayerRef l) => new Layer(l), attached);
+        ElementRef.GetOptionalOne(
+            &SUDrawingElementGetLayer,
+            (SULayerRef l) => new Layer(l),
+            attached
+        )
+        ?? throw new NotSupportedException(
+            "Drawing Element does not have a layer because it is not added to a model."
+        );
 
     private unsafe void SetLayer(Layer layer) =>
         SUDrawingElementSetLayer(ElementRef, layer.Reference).CheckError();
@@ -95,5 +100,17 @@ public abstract class DrawingElement<T> : Entity<T>, IDrawingElement
 
 public interface IDrawingElement
 {
+    public Layer Layer { get; set; }
+
+    public Material? Material { get; set; }
+
+    public bool Hidden { get; set; }
+
+    public bool CastsShadows { get; set; }
+
+    public bool ReceivesShadows { get; set; }
+
+    public BoundingBox BoundingBox { get; }
+
     internal unsafe SUDrawingElementRef ElementRef { get; }
 }

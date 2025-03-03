@@ -4,7 +4,7 @@ using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;
 
-public readonly struct Point3D
+public sealed class Point3D
 {
     public Point3D(double x, double y, double z)
         : this(
@@ -41,7 +41,8 @@ public readonly struct Point3D
     {
         double dist;
         fixed (SUPoint3D* su = &_su)
-            SUPoint3DDistanceToSUPoint3D(su, &other._su, &dist).CheckError();
+        fixed (SUPoint3D* otherSU = &other._su)
+            SUPoint3DDistanceToSUPoint3D(su, otherSU, &dist).CheckError();
         return dist;
     }
 
@@ -51,7 +52,8 @@ public readonly struct Point3D
         {
             bool equal;
             fixed (SUPoint3D* su = &_su)
-                SUPoint3DGetEqual(su, &other._su, &equal).CheckError();
+            fixed (SUPoint3D* otherSU = &other._su)
+                SUPoint3DGetEqual(su, otherSU, &equal).CheckError();
             return equal;
         }
         return false;
@@ -61,7 +63,8 @@ public readonly struct Point3D
     {
         bool equal;
         fixed (SUPoint3D* su = &_su)
-            SUPoint3DLessThan(su, &other._su, &equal).CheckError();
+        fixed (SUPoint3D* otherSU = &other._su)
+            SUPoint3DLessThan(su, otherSU, &equal).CheckError();
         return equal;
     }
 

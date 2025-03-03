@@ -18,94 +18,10 @@
       IsUnitVector: true
     },
     IsReversed: false,
-    Previous: {
-      Edge: $Edge2$,
-      Loop: $Loop1$,
-      Face: $Face1$,
-      StartVertex: $Vertex3$,
-      StartVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      EndVertex: $Vertex1$,
-      EndVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      IsReversed: false,
-      Previous: {
-        Edge: $Edge3$,
-        Loop: $Loop1$,
-        Face: $Face1$,
-        StartVertex: $Vertex2$,
-        StartVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        EndVertex: $Vertex3$,
-        EndVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        IsReversed: false,
-        Id: $Entity1$
-      },
-      Id: $Entity2$
-    },
-    Next: {
-      Edge: $Edge3$,
-      Loop: $Loop1$,
-      Face: $Face1$,
-      StartVertex: $Vertex2$,
-      StartVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      EndVertex: $Vertex3$,
-      EndVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      IsReversed: false,
-      Next: {
-        Edge: $Edge2$,
-        Loop: $Loop1$,
-        Face: $Face1$,
-        StartVertex: $Vertex3$,
-        StartVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        EndVertex: $Vertex1$,
-        EndVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        IsReversed: false,
-        Id: $Entity2$
-      },
-      Id: $Entity1$
-    },
-    Id: $Entity3$
+    Id: $Entity1$
   },
   {
-    Edge: $Edge3$,
+    Edge: $Edge2$,
     Loop: $Loop1$,
     Face: $Face1$,
     StartVertex: $Vertex2$,
@@ -123,94 +39,10 @@
       IsUnitVector: true
     },
     IsReversed: false,
-    Previous: {
-      Edge: $Edge1$,
-      Loop: $Loop1$,
-      Face: $Face1$,
-      StartVertex: $Vertex1$,
-      StartVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      EndVertex: $Vertex2$,
-      EndVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      IsReversed: false,
-      Previous: {
-        Edge: $Edge2$,
-        Loop: $Loop1$,
-        Face: $Face1$,
-        StartVertex: $Vertex3$,
-        StartVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        EndVertex: $Vertex1$,
-        EndVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        IsReversed: false,
-        Id: $Entity2$
-      },
-      Id: $Entity3$
-    },
-    Next: {
-      Edge: $Edge2$,
-      Loop: $Loop1$,
-      Face: $Face1$,
-      StartVertex: $Vertex3$,
-      StartVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      EndVertex: $Vertex1$,
-      EndVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      IsReversed: false,
-      Next: {
-        Edge: $Edge1$,
-        Loop: $Loop1$,
-        Face: $Face1$,
-        StartVertex: $Vertex1$,
-        StartVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        EndVertex: $Vertex2$,
-        EndVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        IsReversed: false,
-        Id: $Entity3$
-      },
-      Id: $Entity2$
-    },
-    Id: $Entity1$
+    Id: $Entity2$
   },
   {
-    Edge: $Edge2$,
+    Edge: $Edge3$,
     Loop: $Loop1$,
     Face: $Face1$,
     StartVertex: $Vertex3$,
@@ -228,90 +60,6 @@
       IsUnitVector: true
     },
     IsReversed: false,
-    Previous: {
-      Edge: $Edge3$,
-      Loop: $Loop1$,
-      Face: $Face1$,
-      StartVertex: $Vertex2$,
-      StartVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      EndVertex: $Vertex3$,
-      EndVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      IsReversed: false,
-      Previous: {
-        Edge: $Edge1$,
-        Loop: $Loop1$,
-        Face: $Face1$,
-        StartVertex: $Vertex1$,
-        StartVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        EndVertex: $Vertex2$,
-        EndVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        IsReversed: false,
-        Id: $Entity3$
-      },
-      Id: $Entity1$
-    },
-    Next: {
-      Edge: $Edge1$,
-      Loop: $Loop1$,
-      Face: $Face1$,
-      StartVertex: $Vertex1$,
-      StartVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      EndVertex: $Vertex2$,
-      EndVertexNormal: {
-        Z: 0.0254,
-        Length: 0.0254,
-        IsValid: true,
-        IsUnitVector: true
-      },
-      IsReversed: false,
-      Next: {
-        Edge: $Edge3$,
-        Loop: $Loop1$,
-        Face: $Face1$,
-        StartVertex: $Vertex2$,
-        StartVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        EndVertex: $Vertex3$,
-        EndVertexNormal: {
-          Z: 0.0254,
-          Length: 0.0254,
-          IsValid: true,
-          IsUnitVector: true
-        },
-        IsReversed: false,
-        Id: $Entity1$
-      },
-      Id: $Entity3$
-    },
-    Id: $Entity2$
+    Id: $Entity3$
   }
 ]
