@@ -51,6 +51,8 @@ public class Face : DrawingElement<SUFaceRef>
     public IEnumerable<Vertex> Vertices => GetVertices();
     public int VertexCount => GetVertexCount();
 
+    public unsafe Plane3D Plane => new(Get<SUPlane3D>(&SUFaceGetPlane));
+
     private unsafe int GetVertexCount() => GetInt(&SUFaceGetNumVertices);
 
     private unsafe int GetEdgeCount() => GetInt(&SUFaceGetNumEdges);

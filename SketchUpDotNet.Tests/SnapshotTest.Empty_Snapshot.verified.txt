@@ -1041,6 +1041,19 @@
                                                       $Vertex10$
                                                     ],
                                                     VertexCount: 4,
+                                                    Plane: {
+                                                      C: 0.0254,
+                                                      D: -2.0,
+                                                      Position: {
+                                                        Z: 2.0
+                                                      },
+                                                      Normal: {
+                                                        Z: 0.0254,
+                                                        Length: 0.0254,
+                                                        IsValid: true,
+                                                        IsUnitVector: true
+                                                      }
+                                                    },
                                                     Layer: Layer0,
                                                     Hidden: false,
                                                     CastsShadows: true,
@@ -1787,6 +1800,19 @@
                                                                                   $Vertex10$
                                                                                 ],
                                                                                 VertexCount: 4,
+                                                                                Plane: {
+                                                                                  B: 0.0254,
+                                                                                  D: -2.0,
+                                                                                  Position: {
+                                                                                    Y: 2.0
+                                                                                  },
+                                                                                  Normal: {
+                                                                                    Y: 0.0254,
+                                                                                    Length: 0.0254,
+                                                                                    IsValid: true,
+                                                                                    IsUnitVector: true
+                                                                                  }
+                                                                                },
                                                                                 Layer: Layer0,
                                                                                 Hidden: false,
                                                                                 CastsShadows: true,
@@ -2481,6 +2507,16 @@
                                                                                             $Vertex14$
                                                                                           ],
                                                                                           VertexCount: 4,
+                                                                                          Plane: {
+                                                                                            B: -0.0254,
+                                                                                            Position: {},
+                                                                                            Normal: {
+                                                                                              Y: -0.0254,
+                                                                                              Length: 0.0254,
+                                                                                              IsValid: true,
+                                                                                              IsUnitVector: true
+                                                                                            }
+                                                                                          },
                                                                                           Layer: Layer0,
                                                                                           Hidden: false,
                                                                                           CastsShadows: true,
@@ -3177,6 +3213,19 @@
                                                                                   $Vertex12$
                                                                                 ],
                                                                                 VertexCount: 4,
+                                                                                Plane: {
+                                                                                  A: 0.0254,
+                                                                                  D: -2.0,
+                                                                                  Position: {
+                                                                                    X: 2.0
+                                                                                  },
+                                                                                  Normal: {
+                                                                                    X: 0.0254,
+                                                                                    Length: 0.0254,
+                                                                                    IsValid: true,
+                                                                                    IsUnitVector: true
+                                                                                  }
+                                                                                },
                                                                                 Layer: Layer0,
                                                                                 Hidden: false,
                                                                                 CastsShadows: true,
@@ -4018,6 +4067,16 @@
                                                       $Vertex8$
                                                     ],
                                                     VertexCount: 4,
+                                                    Plane: {
+                                                      A: -0.0254,
+                                                      Position: {},
+                                                      Normal: {
+                                                        X: -0.0254,
+                                                        Length: 0.0254,
+                                                        IsValid: true,
+                                                        IsUnitVector: true
+                                                      }
+                                                    },
                                                     Layer: Layer0,
                                                     Hidden: false,
                                                     CastsShadows: true,
@@ -4960,6 +5019,16 @@
               $Vertex27$
             ],
             VertexCount: 4,
+            Plane: {
+              C: -0.0254,
+              Position: {},
+              Normal: {
+                Z: -0.0254,
+                Length: 0.0254,
+                IsValid: true,
+                IsUnitVector: true
+              }
+            },
             Layer: Layer0,
             Hidden: false,
             CastsShadows: true,
