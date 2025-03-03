@@ -17,7 +17,7 @@ public class Group : DrawingElement<SUGroupRef>
         set => SetName(value);
     }
 
-    public SUTransformation Transform
+    public Transform Transform
     {
         get => GetTransform();
         set => SetTransform(value);
@@ -56,17 +56,10 @@ public class Group : DrawingElement<SUGroupRef>
     private unsafe Component GetDefinition() =>
         GetOne(&SUGroupGetDefinition, (SUComponentDefinitionRef e) => new Component(e));
 
-    private unsafe SUTransformation GetTransform()
-    {
-        SUTransformation transformation;
-        SUGroupGetTransform(Reference, &transformation).CheckError();
-        return transformation;
-    }
+    private unsafe Transform GetTransform() => new(Get<SUTransformation>(&SUGroupGetTransform));
 
-    private unsafe void SetTransform(SUTransformation transform)
-    {
-        SUGroupSetTransform(Reference, &transform).CheckError();
-    }
+    private unsafe void SetTransform(Transform transform) =>
+        Set(&SUGroupSetTransform, transform.ToSU());
 
     protected sealed override unsafe delegate* <SUGroupRef*, SUResult> Release => null;
 

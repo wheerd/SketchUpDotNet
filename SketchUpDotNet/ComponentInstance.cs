@@ -11,7 +11,7 @@ public class ComponentInstance : DrawingElement<SUComponentInstanceRef>
         set => SetName(value);
     }
 
-    public SUTransformation Transform
+    public Transform Transform
     {
         get => GetTransform();
         set => SetTransform(value);
@@ -26,17 +26,11 @@ public class ComponentInstance : DrawingElement<SUComponentInstanceRef>
     private unsafe Component GetDefinition() =>
         GetOne<SUComponentDefinitionRef, Component>(&SUComponentInstanceGetDefinition, d => new(d));
 
-    private unsafe SUTransformation GetTransform()
-    {
-        SUTransformation transformation;
-        SUComponentInstanceGetTransform(Reference, &transformation).CheckError();
-        return transformation;
-    }
+    private unsafe Transform GetTransform() =>
+        new(Get<SUTransformation>(&SUComponentInstanceGetTransform));
 
-    private unsafe void SetTransform(SUTransformation transform)
-    {
-        SUComponentInstanceSetTransform(Reference, &transform).CheckError();
-    }
+    private unsafe void SetTransform(Transform transform) =>
+        Set(&SUComponentInstanceSetTransform, transform.ToSU());
 
     internal unsafe ComponentInstance(SUComponentInstanceRef @ref, bool attached)
         : base(@ref)

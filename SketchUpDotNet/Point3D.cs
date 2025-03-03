@@ -20,8 +20,9 @@ public readonly struct Point3D
     public double Y => _su.y.FromSULength();
     public double Z => _su.z.FromSULength();
 
-    public unsafe Point3D Transform(SUTransformation t)
+    public unsafe Point3D Transform(Transform transform)
     {
+        SUTransformation t = transform.ToSU();
         SUPoint3D su = _su;
         SUPoint3DTransform(&t, &su).CheckError();
         return new(su);

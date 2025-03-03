@@ -42,10 +42,11 @@ public class Edge : DrawingElement<SUEdgeRef>
         GetMany(&SUEdgeGetNumFaces, &SUEdgeGetFaces, (SUFaceRef f) => new Face(f));
     public unsafe int FaceCount => GetInt(&SUEdgeGetNumFaces);
 
-    public unsafe double LengthWithTransform(SUTransformation transformation)
+    public unsafe double LengthWithTransform(Transform transformation)
     {
+        SUTransformation t = transformation.ToSU();
         double value;
-        SUEdgeGetLengthWithTransform(Reference, &transformation, &value).CheckError();
+        SUEdgeGetLengthWithTransform(Reference, &t, &value).CheckError();
         return value;
     }
 
