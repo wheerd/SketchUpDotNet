@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Runtime.CompilerServices;
 using SketchUpDotNet.Bindings;
+using SketchUpDotNet.Geometry;
 using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet;

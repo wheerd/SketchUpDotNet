@@ -1,3 +1,5 @@
+using SketchUpDotNet.Model;
+
 namespace SketchUpDotNet.Tests.Utils;
 
 class LayerNameConverter : WriteOnlyJsonConverter<Layer>

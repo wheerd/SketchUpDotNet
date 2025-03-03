@@ -1,3 +1,5 @@
+using SketchUpDotNet.Geometry;
+using SketchUpDotNet.Model;
 using SketchUpDotNet.Tests.Utils;
 
 namespace SketchUpDotNet.Tests;
@@ -15,7 +17,7 @@ public class ArcCurveTests
         settings.IgnoreMembers<Vertex>(_ => _.Edges, _ => _.Loops, _ => _.Faces);
         settings.IgnoreMembersWithType<BoundingBox>();
         settings.IgnoreMembersWithType<Layer>();
-        using var model = new Model();
+        using var model = new SketchUpModel();
 
         // Act
         var curve = ArcCurve.Create(new(0, 0, 0), new(100, 0, 0), new(100, 0, 0), new(0, 0, 1), 5);

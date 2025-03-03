@@ -1,3 +1,4 @@
+using SketchUpDotNet.Model;
 using SketchUpDotNet.Tests.Utils;
 
 namespace SketchUpDotNet.Tests;
@@ -35,7 +36,7 @@ public class EdgeUseTests
         settings.IgnoreMembers<EdgeUse>(_ => _.Partners, _ => _.Previous, _ => _.Next);
 
         // Unless owned by model the edge uses are freed immediately.
-        using var model = new Model();
+        using var model = new SketchUpModel();
         var face = Face.CreateSimple(new(0, 0, 0), new(100, 0, 0), new(0, 100, 0));
         model.Entities.AddFaces(face);
 

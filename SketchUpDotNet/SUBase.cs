@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.Runtime.CompilerServices;
 using SketchUpDotNet.Bindings;
+using SketchUpDotNet.Geometry;
+using SketchUpDotNet.Model;
 
 namespace SketchUpDotNet;
 
@@ -32,7 +34,8 @@ public abstract class SUBase<T> : IDisposable, IBase
         delegate* <T, nuint, TElement*, SUResult> add,
         SUBase<TElement>[] elements
     )
-        where TElement : unmanaged => Reference.AddMany(add, elements, attached || this is Model);
+        where TElement : unmanaged =>
+        Reference.AddMany(add, elements, attached || this is SketchUpModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe TOut[] GetMany<TElement, TOut>(
@@ -42,7 +45,7 @@ public abstract class SUBase<T> : IDisposable, IBase
     )
         where TElement : unmanaged
         where TOut : SUBase<TElement> =>
-        Reference.GetMany(getCount, get, construct, attached || this is Model);
+        Reference.GetMany(getCount, get, construct, attached || this is SketchUpModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe string[] GetStrings(
@@ -57,7 +60,7 @@ public abstract class SUBase<T> : IDisposable, IBase
     )
         where TElement : unmanaged
         where TOut : SUBase<TElement> =>
-        Reference.GetOne(get, construct, attached || this is Model);
+        Reference.GetOne(get, construct, attached || this is SketchUpModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe TOut? GetOptionalOne<TElement, TOut>(
@@ -66,7 +69,7 @@ public abstract class SUBase<T> : IDisposable, IBase
     )
         where TElement : unmanaged
         where TOut : SUBase<TElement> =>
-        Reference.GetOptionalOne(get, construct, attached || this is Model);
+        Reference.GetOptionalOne(get, construct, attached || this is SketchUpModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe string GetString(delegate* <T, SUStringRef*, SUResult> getter) =>
@@ -201,7 +204,7 @@ public abstract class SUBase<T> : IDisposable, IBase
     {
         if (!disposed)
         {
-            if (Release != null && (!attached || this is Model))
+            if (Release != null && (!attached || this is SketchUpModel))
             {
                 fixed (T* refPtr = &Reference)
                 {

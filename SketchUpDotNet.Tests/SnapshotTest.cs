@@ -1,4 +1,5 @@
-﻿using SketchUpDotNet.Tests.Utils;
+﻿using SketchUpDotNet.Model;
+using SketchUpDotNet.Tests.Utils;
 
 namespace SketchUpDotNet.Tests;
 
@@ -39,7 +40,7 @@ public class SnapshotTest
         );
 
         // Act
-        using var result = Model.Load(path);
+        using var result = SketchUpModel.Load(path);
 
         // Assert
         await Verify(result, settings).DisableDiff();

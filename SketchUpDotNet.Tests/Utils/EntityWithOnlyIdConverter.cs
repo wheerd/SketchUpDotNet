@@ -1,3 +1,5 @@
+using SketchUpDotNet.Model;
+
 namespace SketchUpDotNet.Tests.Utils;
 
 class EntityWithOnlyIdConverter<T>(EntityIdSource? idSource = null) : WriteOnlyJsonConverter<T>
