@@ -12,7 +12,7 @@ public class Vertex : Entity<SUVertexRef>
         set => Set(&SUVertexSetPosition, value.ToSU());
     }
 
-    public unsafe Point3D GetPositionTransformed(Transform transform)
+    public unsafe Point3D GetPositionTransformed(Transform3D transform)
     {
         SUTransformation t = transform.ToSU();
         SUPoint3D su = Get<SUPoint3D>(&SUVertexGetPosition);

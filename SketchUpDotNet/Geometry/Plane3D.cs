@@ -65,7 +65,7 @@ public sealed class Plane3D
         }
     }
 
-    public unsafe Plane3D Transform(Transform transform)
+    public unsafe Plane3D Transform(Transform3D transform)
     {
         SUTransformation t = transform.ToSU();
         SUPlane3D su = _su;

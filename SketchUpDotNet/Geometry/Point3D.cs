@@ -20,7 +20,7 @@ public sealed class Point3D
     public double Y => _su.y.FromSULength();
     public double Z => _su.z.FromSULength();
 
-    public unsafe Point3D Transform(Transform transform)
+    public unsafe Point3D Transform(Transform3D transform)
     {
         SUTransformation t = transform.ToSU();
         SUPoint3D su = _su;

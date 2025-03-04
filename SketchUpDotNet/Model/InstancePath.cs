@@ -36,9 +36,9 @@ public class InstancePath : SUBase<SUInstancePathRef>
     public unsafe int PathDepth => GetInt(&SUInstancePathGetPathDepth);
     public unsafe int FullDepth => GetInt(&SUInstancePathGetFullDepth);
 
-    public unsafe Transform Transform => new(Get<SUTransformation>(&SUInstancePathGetTransform));
+    public unsafe Transform3D Transform => new(Get<SUTransformation>(&SUInstancePathGetTransform));
 
-    public unsafe Transform GetTransformAtDepth(int depth)
+    public unsafe Transform3D GetTransformAtDepth(int depth)
     {
         SUTransformation transform;
         SUInstancePathGetTransformAtDepth(

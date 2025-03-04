@@ -37,7 +37,7 @@ public abstract class DrawingElement<T> : Entity<T>, IDrawingElement
         set => SetReceivesShadows(value);
     }
 
-    public BoundingBox BoundingBox => GetBoundingBox();
+    public BoundingBox3D BoundingBox => GetBoundingBox();
 
     internal DrawingElement(T @ref)
         : base(@ref) { }
@@ -82,7 +82,7 @@ public abstract class DrawingElement<T> : Entity<T>, IDrawingElement
     private unsafe void SetMaterial(Material? material) =>
         SUDrawingElementSetMaterial(ElementRef, material?.Reference ?? default).CheckError();
 
-    private unsafe BoundingBox GetBoundingBox() =>
+    private unsafe BoundingBox3D GetBoundingBox() =>
         new(ElementRef.Get<SUDrawingElementRef, SUBoundingBox3D>(&SUDrawingElementGetBoundingBox));
 
     private unsafe Layer GetLayer() =>
@@ -111,7 +111,7 @@ public interface IDrawingElement : IEntity
 
     public bool ReceivesShadows { get; set; }
 
-    public BoundingBox BoundingBox { get; }
+    public BoundingBox3D BoundingBox { get; }
 
     internal static IDrawingElement Create(SUDrawingElementRef reference)
     {

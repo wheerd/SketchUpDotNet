@@ -15,7 +15,7 @@ public class ArcCurveTests
         settings.EntityIdHandling();
         settings.IgnoreMembers<Edge>(_ => _.Curve, _ => _.Faces);
         settings.IgnoreMembers<Vertex>(_ => _.Edges, _ => _.Loops, _ => _.Faces);
-        settings.IgnoreMembersWithType<BoundingBox>();
+        settings.IgnoreMembersWithType<BoundingBox3D>();
         settings.IgnoreMembersWithType<Layer>();
         using var model = new SketchUpModel();
 

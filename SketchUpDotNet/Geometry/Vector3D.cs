@@ -101,7 +101,7 @@ public readonly struct Vector3D
         }
     }
 
-    public unsafe Vector3D Transform(Transform transform)
+    public unsafe Vector3D Transform(Transform3D transform)
     {
         SUTransformation t = transform.ToSU();
         SUVector3D su = _su;

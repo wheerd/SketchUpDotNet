@@ -6,7 +6,7 @@ namespace SketchUpDotNet.Model;
 
 public class Entities : SUBase<SUEntitiesRef>
 {
-    public unsafe BoundingBox BoundingBox => new(Get<SUBoundingBox3D>(&SUEntitiesGetBoundingBox));
+    public unsafe BoundingBox3D BoundingBox => new(Get<SUBoundingBox3D>(&SUEntitiesGetBoundingBox));
 
     public unsafe IEnumerable<Face> Faces =>
         GetMany(&SUEntitiesGetNumFaces, &SUEntitiesGetFaces, static (SUFaceRef e) => new Face(e));

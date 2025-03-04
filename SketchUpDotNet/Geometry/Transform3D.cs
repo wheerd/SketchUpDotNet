@@ -4,9 +4,9 @@ using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet.Geometry;
 
-public sealed class Transform
+public sealed class Transform3D
 {
-    public static unsafe Transform FromPointAndNormal(Point3D point, Vector3D normal)
+    public static unsafe Transform3D FromPointAndNormal(Point3D point, Vector3D normal)
     {
         SUPoint3D pointSU = point.ToSU();
         SUVector3D normalSU = normal.ToSU();
@@ -15,7 +15,7 @@ public sealed class Transform
         return new(t);
     }
 
-    public static unsafe Transform FromPointAndNormal(
+    public static unsafe Transform3D FromPointAndNormal(
         Point3D point,
         Vector3D xAxis,
         Vector3D yAxis,
@@ -32,21 +32,21 @@ public sealed class Transform
         return new(t);
     }
 
-    public static unsafe Transform Scale(double scale)
+    public static unsafe Transform3D Scale(double scale)
     {
         SUTransformation t;
         SUTransformationScale(&t, scale).CheckError();
         return new(t);
     }
 
-    public static unsafe Transform NonUniformScale(double scaleX, double scaleY, double scaleZ)
+    public static unsafe Transform3D NonUniformScale(double scaleX, double scaleY, double scaleZ)
     {
         SUTransformation t;
         SUTransformationNonUniformScale(&t, scaleX, scaleY, scaleZ).CheckError();
         return new(t);
     }
 
-    public static unsafe Transform ScaleAboutPoint(Point3D point, double scale)
+    public static unsafe Transform3D ScaleAboutPoint(Point3D point, double scale)
     {
         SUPoint3D pointSU = point.ToSU();
         SUTransformation t;
@@ -54,7 +54,7 @@ public sealed class Transform
         return new(t);
     }
 
-    public static unsafe Transform NonUniformScaleAboutPoint(
+    public static unsafe Transform3D NonUniformScaleAboutPoint(
         Point3D point,
         double scaleX,
         double scaleY,
@@ -68,7 +68,7 @@ public sealed class Transform
         return new(t);
     }
 
-    public static unsafe Transform Translate(Vector3D vector)
+    public static unsafe Transform3D Translate(Vector3D vector)
     {
         SUVector3D vectorSU = vector.ToSU();
         SUTransformation t;
@@ -76,7 +76,7 @@ public sealed class Transform
         return new(t);
     }
 
-    public static unsafe Transform Rotation(Point3D point, Vector3D vector, double angle)
+    public static unsafe Transform3D Rotation(Point3D point, Vector3D vector, double angle)
     {
         SUPoint3D pointSU = point.ToSU();
         SUVector3D vectorSU = vector.ToSU();
@@ -85,7 +85,7 @@ public sealed class Transform
         return new(t);
     }
 
-    public unsafe Transform Multiply(Transform other)
+    public unsafe Transform3D Multiply(Transform3D other)
     {
         SUTransformation t;
         fixed (SUTransformation* t1 = &_su)
@@ -94,9 +94,10 @@ public sealed class Transform
         return new(t);
     }
 
-    public static Transform operator *(Transform left, Transform right) => left.Multiply(right);
+    public static Transform3D operator *(Transform3D left, Transform3D right) =>
+        left.Multiply(right);
 
-    public unsafe Transform Interpolate(Transform other, double weight)
+    public unsafe Transform3D Interpolate(Transform3D other, double weight)
     {
         SUTransformation t;
         fixed (SUTransformation* t1 = &_su)
@@ -198,7 +199,7 @@ public sealed class Transform
 
     private readonly SUTransformation _su;
 
-    internal Transform(SUTransformation su)
+    internal Transform3D(SUTransformation su)
     {
         _su = su;
     }

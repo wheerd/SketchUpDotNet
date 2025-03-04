@@ -2,11 +2,11 @@ using SketchUpDotNet.Bindings;
 
 namespace SketchUpDotNet.Geometry;
 
-public sealed class BoundingBox
+public sealed class BoundingBox3D
 {
     private readonly SUBoundingBox3D _su;
 
-    internal BoundingBox(SUBoundingBox3D su)
+    internal BoundingBox3D(SUBoundingBox3D su)
     {
         _su = su;
     }
