@@ -100,6 +100,24 @@ public class Entities : SUBase<SUEntitiesRef>
             input.SetAttachedToModel(true);
     }
 
+    public unsafe IEntitiesParent Parent
+    {
+        get
+        {
+            SUEntitiesParent parent;
+            SUEntitiesGetParent(Reference, &parent).CheckError();
+            if (parent.model.ptr != null)
+            {
+                return SketchUpModel.CreateOrGet(parent.model);
+            }
+            if (parent.definition.ptr != null)
+            {
+                return new Component(parent.definition);
+            }
+            throw new InvalidOperationException("Parent is not a model or component definition");
+        }
+    }
+
     internal static unsafe Entities CreateOrGet(SUEntitiesRef @ref, bool attached)
     {
         IntPtr ptr = (nint)@ref.ptr;
@@ -108,7 +126,7 @@ public class Entities : SUBase<SUEntitiesRef>
             return model;
         }
         model = new(@ref, attached);
-        _instances.Add(ptr, model);
+        _instances[ptr] = model;
         return model;
     }
 

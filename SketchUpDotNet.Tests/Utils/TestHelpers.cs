@@ -35,6 +35,7 @@ public static class TestHelpers
             )
         );
         settings.IgnoreMembers<IEntity>(e => e.Model, e => e.PersistentId, e => e.ParentEntities);
+        settings.IgnoreMembers<Entities>(e => e.Parent);
         return idSource;
     }
 }

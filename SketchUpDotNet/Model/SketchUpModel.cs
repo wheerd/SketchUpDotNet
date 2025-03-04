@@ -3,13 +3,13 @@ using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet.Model;
 
-public class SketchUpModel : SUBase<SUModelRef>
+public class SketchUpModel : SUBase<SUModelRef>, IEntitiesParent
 {
     public unsafe SketchUpModel()
         : base(&SUModelCreate)
     {
         IntPtr ptr = (nint)Reference.ptr;
-        _models.Add(ptr, this);
+        _models[ptr] = this;
 
         Entities = GetEntities();
     }
@@ -163,7 +163,7 @@ public class SketchUpModel : SUBase<SUModelRef>
             return model;
         }
         model = new(@ref);
-        _models.Add(ptr, model);
+        _models[ptr] = model;
         return model;
     }
 

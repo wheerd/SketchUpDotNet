@@ -3,7 +3,7 @@ using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet.Model;
 
-public class Component : DrawingElement<SUComponentDefinitionRef>
+public class Component : DrawingElement<SUComponentDefinitionRef>, IEntitiesParent
 {
     public unsafe Component()
         : base(&SUComponentDefinitionCreate)
