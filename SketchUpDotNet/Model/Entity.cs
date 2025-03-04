@@ -8,9 +8,39 @@ public readonly record struct EntityId(int Value);
 public abstract class Entity<T> : SUBase<T>, IEntity
     where T : unmanaged
 {
-    public EntityId Id => GetId();
+    public unsafe EntityId Id => new(EntityRef.GetInt(&SUEntityGetID));
 
-    public IEnumerable<AttributeDictionary> AttributeDictionaries => GetAttributeDictionaries();
+    public unsafe long PersistentId
+    {
+        get
+        {
+            long id;
+            SUEntityGetPersistentID(EntityRef, &id).CheckError();
+            return id;
+        }
+    }
+
+    public unsafe SketchUpModel? Model =>
+        EntityRef.GetOptionalOne(
+            &SUEntityGetModel,
+            (SUModelRef model) => SketchUpModel.CreateOrGet(model),
+            false
+        );
+
+    public unsafe Entities? ParentEntities =>
+        EntityRef.GetOptionalOne(
+            &SUEntityGetParentEntities,
+            (SUEntitiesRef model) => Entities.CreateOrGet(model, attached),
+            false
+        );
+
+    public unsafe IEnumerable<AttributeDictionary> AttributeDictionaries =>
+        EntityRef.GetMany(
+            &SUEntityGetNumAttributeDictionaries,
+            &SUEntityGetAttributeDictionaries,
+            (SUAttributeDictionaryRef d) => new AttributeDictionary(d),
+            attached
+        );
 
     public unsafe AttributeDictionary GetAttributeDictionary(string name) =>
         EntityRef.GetOneByKey(
@@ -43,21 +73,51 @@ public abstract class Entity<T> : SUBase<T>, IEntity
     private unsafe SUEntityRef EntityRef => entityRef ??= ToEntity(Reference);
 
     SUEntityRef IEntity.EntityRef => EntityRef;
-
-    private unsafe EntityId GetId() => new(EntityRef.GetInt(&SUEntityGetID));
-
-    private unsafe AttributeDictionary[] GetAttributeDictionaries() =>
-        EntityRef.GetMany(
-            &SUEntityGetNumAttributeDictionaries,
-            &SUEntityGetAttributeDictionaries,
-            (SUAttributeDictionaryRef d) => new AttributeDictionary(d),
-            attached
-        );
 }
 
 public interface IEntity : IBase
 {
     public EntityId Id { get; }
+
+    public long PersistentId { get; }
+
+    public SketchUpModel? Model { get; }
+    public Entities? ParentEntities { get; }
+
+    internal static IEntity Create(SUEntityRef entityRef)
+    {
+        return SUEntityGetType(entityRef) switch
+        {
+            SURefType.SURefType_ArcCurve => new ArcCurve(SUArcCurveFromEntity(entityRef)),
+            SURefType.SURefType_AttributeDictionary => new AttributeDictionary(
+                SUAttributeDictionaryFromEntity(entityRef)
+            ),
+            SURefType.SURefType_ComponentInstance => new ComponentInstance(
+                SUComponentInstanceFromEntity(entityRef),
+                false
+            ),
+            SURefType.SURefType_ComponentDefinition => new Component(
+                SUComponentDefinitionFromEntity(entityRef)
+            ),
+            SURefType.SURefType_Group => new Group(SUGroupFromEntity(entityRef)),
+            SURefType.SURefType_Curve => ICurve.Create(SUCurveFromEntity(entityRef)),
+            SURefType.SURefType_Dimension
+            or SURefType.SURefType_DimensionLinear
+            or SURefType.SURefType_DimensionRadial => IDimension.Create(
+                SUDimensionFromEntity(entityRef)
+            ),
+            SURefType.SURefType_Edge => new Edge(SUEdgeFromEntity(entityRef)),
+            SURefType.SURefType_EdgeUse => new EdgeUse(SUEdgeUseFromEntity(entityRef)),
+            SURefType.SURefType_Face => new Face(SUFaceFromEntity(entityRef)),
+            SURefType.SURefType_Font => new Font(SUFontFromEntity(entityRef)),
+            SURefType.SURefType_Layer => new Layer(SULayerFromEntity(entityRef)),
+            SURefType.SURefType_Loop => new Loop(SULoopFromEntity(entityRef)),
+            SURefType.SURefType_Material => new Material(SUMaterialFromEntity(entityRef)),
+            SURefType.SURefType_Texture => new Texture(SUTextureFromEntity(entityRef)),
+            SURefType.SURefType_Vertex => new Vertex(SUVertexFromEntity(entityRef)),
+            _ => throw new NotImplementedException(),
+        };
+    }
 
     internal unsafe SUEntityRef EntityRef { get; }
 }

@@ -23,6 +23,7 @@ public static class TestHelpers
                 new EntityConverter<Face>(idSource),
                 new EntityConverter<Loop>(idSource),
                 new EntityConverter<Edge>(idSource),
+                new EntityConverter<EdgeUse>(idSource),
                 new EntityConverter<Vertex>(idSource),
                 new EntityConverter<Group>(idSource),
                 new EntityConverter<ComponentInstance>(idSource),
@@ -33,6 +34,7 @@ public static class TestHelpers
                 new EntityConverter<Font>(idSource)
             )
         );
+        settings.IgnoreMembers<IEntity>(e => e.Model, e => e.PersistentId, e => e.ParentEntities);
         return idSource;
     }
 }

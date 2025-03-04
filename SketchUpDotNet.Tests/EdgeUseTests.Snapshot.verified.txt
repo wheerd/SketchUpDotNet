@@ -17,8 +17,9 @@
       IsValid: true,
       IsUnitVector: true
     },
+    PartnerCount: 0,
     IsReversed: false,
-    Id: $Entity1$
+    Id: $EdgeUse1$
   },
   {
     Edge: $Edge2$,
@@ -38,8 +39,9 @@
       IsValid: true,
       IsUnitVector: true
     },
+    PartnerCount: 0,
     IsReversed: false,
-    Id: $Entity2$
+    Id: $EdgeUse2$
   },
   {
     Edge: $Edge3$,
@@ -59,7 +61,8 @@
       IsValid: true,
       IsUnitVector: true
     },
+    PartnerCount: 0,
     IsReversed: false,
-    Id: $Entity3$
+    Id: $EdgeUse3$
   }
 ]

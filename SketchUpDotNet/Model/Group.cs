@@ -46,7 +46,7 @@ public class Group : DrawingElement<SUGroupRef>
     private unsafe string GetGuid() => GetString(&SUGroupGetGuid);
 
     private unsafe Entities GetEntities() =>
-        GetOne(&SUGroupGetEntities, (SUEntitiesRef e) => new Entities(e, attached));
+        GetOne(&SUGroupGetEntities, (SUEntitiesRef e) => Entities.CreateOrGet(e, attached));
 
     internal override void SetAttachedToModel(bool attached)
     {

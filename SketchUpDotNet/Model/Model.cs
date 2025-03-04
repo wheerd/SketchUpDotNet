@@ -8,6 +8,9 @@ public class SketchUpModel : SUBase<SUModelRef>
     public unsafe SketchUpModel()
         : base(&SUModelCreate)
     {
+        IntPtr ptr = (nint)Reference.ptr;
+        _models.Add(ptr, this);
+
         Entities = GetEntities();
     }
 
@@ -120,7 +123,7 @@ public class SketchUpModel : SUBase<SUModelRef>
         );
 
     private unsafe Entities GetEntities() =>
-        GetOne(&SUModelGetEntities, (SUEntitiesRef e) => new Entities(e, true));
+        GetOne(&SUModelGetEntities, (SUEntitiesRef e) => Entities.CreateOrGet(e, true));
 
     private unsafe SUModelUnits GetUnits() => Get<SUModelUnits>(&SUModelGetUnits);
 
@@ -146,11 +149,25 @@ public class SketchUpModel : SUBase<SUModelRef>
         }
     }
 
-    internal unsafe SketchUpModel(SUModelRef @ref)
+    private unsafe SketchUpModel(SUModelRef @ref)
         : base(@ref, true)
     {
         Entities = GetEntities();
     }
+
+    internal static unsafe SketchUpModel CreateOrGet(SUModelRef @ref)
+    {
+        IntPtr ptr = (nint)@ref.ptr;
+        if (_models.TryGetValue(ptr, out SketchUpModel? model))
+        {
+            return model;
+        }
+        model = new(@ref);
+        _models.Add(ptr, model);
+        return model;
+    }
+
+    private static readonly unsafe Dictionary<IntPtr, SketchUpModel> _models = [];
 
     protected sealed override unsafe delegate* <SUModelRef*, SUResult> Release => &SUModelRelease;
 }

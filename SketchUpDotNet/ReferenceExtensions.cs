@@ -130,7 +130,7 @@ internal static class ReferenceExtensions
     )
         where T : unmanaged
         where TElement : unmanaged
-        where TOut : SUBase<TElement>
+        where TOut : IBase
     {
         TElement element;
         get(reference.EnsureReferenceValid(), &element).CheckError();

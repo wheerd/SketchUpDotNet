@@ -59,8 +59,7 @@ public abstract class SUBase<T> : IDisposable, IBase
         Func<TElement, TOut> construct
     )
         where TElement : unmanaged
-        where TOut : SUBase<TElement> =>
-        Reference.GetOne(get, construct, attached || this is SketchUpModel);
+        where TOut : IBase => Reference.GetOne(get, construct, attached || this is SketchUpModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe TOut? GetOptionalOne<TElement, TOut>(

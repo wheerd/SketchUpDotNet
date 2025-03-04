@@ -113,5 +113,28 @@ public interface IDrawingElement : IEntity
 
     public BoundingBox BoundingBox { get; }
 
+    internal static IDrawingElement Create(SUDrawingElementRef reference)
+    {
+        return SUDrawingElementGetType(reference) switch
+        {
+            SURefType.SURefType_ComponentInstance => new ComponentInstance(
+                SUComponentInstanceFromDrawingElement(reference),
+                false
+            ),
+            SURefType.SURefType_ComponentDefinition => new Component(
+                SUComponentDefinitionFromDrawingElement(reference)
+            ),
+            SURefType.SURefType_Group => new Group(SUGroupFromDrawingElement(reference)),
+            SURefType.SURefType_Dimension
+            or SURefType.SURefType_DimensionLinear
+            or SURefType.SURefType_DimensionRadial => IDimension.Create(
+                SUDimensionFromDrawingElement(reference)
+            ),
+            SURefType.SURefType_Edge => new Edge(SUEdgeFromDrawingElement(reference)),
+            SURefType.SURefType_Face => new Face(SUFaceFromDrawingElement(reference)),
+            _ => throw new NotImplementedException(),
+        };
+    }
+
     internal unsafe SUDrawingElementRef ElementRef { get; }
 }

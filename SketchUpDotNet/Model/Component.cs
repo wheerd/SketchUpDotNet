@@ -53,7 +53,10 @@ public class Component : DrawingElement<SUComponentDefinitionRef>
         SetString(&SUComponentDefinitionSetDescription, description);
 
     private unsafe Entities GetEntities() =>
-        GetOne<SUEntitiesRef, Entities>(&SUComponentDefinitionGetEntities, d => new(d, attached));
+        GetOne<SUEntitiesRef, Entities>(
+            &SUComponentDefinitionGetEntities,
+            d => Entities.CreateOrGet(d, attached)
+        );
 
     internal override void SetAttachedToModel(bool attached)
     {

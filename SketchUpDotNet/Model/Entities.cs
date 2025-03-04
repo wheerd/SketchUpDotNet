@@ -100,7 +100,21 @@ public class Entities : SUBase<SUEntitiesRef>
             input.SetAttachedToModel(true);
     }
 
-    internal Entities(SUEntitiesRef @ref, bool attached)
+    internal static unsafe Entities CreateOrGet(SUEntitiesRef @ref, bool attached)
+    {
+        IntPtr ptr = (nint)@ref.ptr;
+        if (_instances.TryGetValue(ptr, out Entities? model))
+        {
+            return model;
+        }
+        model = new(@ref, attached);
+        _instances.Add(ptr, model);
+        return model;
+    }
+
+    private static readonly unsafe Dictionary<IntPtr, Entities> _instances = [];
+
+    private Entities(SUEntitiesRef @ref, bool attached)
         : base(@ref)
     {
         this.attached = attached;
