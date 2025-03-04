@@ -70,6 +70,12 @@ public class Component : DrawingElement<SUComponentDefinitionRef>, IEntitiesPare
     public unsafe void OrientFacesConsistently() =>
         SUComponentDefinitionOrientFacesConsistently(Reference).CheckError();
 
+    public unsafe void ApplySchemaType(Schema schema, SUSchemaTypeRef type) =>
+        SUComponentDefinitionApplySchemaType(Reference, schema.Reference, type).CheckError();
+
+    public unsafe void SetAxes(Axes axes) =>
+        SUComponentDefinitionSetAxes(Reference, axes.Reference).CheckError();
+
     public unsafe void SaveToFile(string path, SUModelVersion version)
     {
         var bytes = path.GetSBytes();

@@ -31,7 +31,8 @@ public static class TestHelpers
                 new EntityConverter<SimpleCurve>(idSource),
                 new EntityConverter<DimensionLinear>(idSource),
                 new EntityConverter<DimensionRadial>(idSource),
-                new EntityConverter<Font>(idSource)
+                new EntityConverter<Font>(idSource),
+                new EntityConverter<Axes>(idSource)
             )
         );
         settings.IgnoreMembers<IEntity>(e => e.Model, e => e.PersistentId, e => e.ParentEntities);

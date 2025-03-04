@@ -88,6 +88,7 @@ public interface IEntity : IBase
     {
         return SUEntityGetType(entityRef) switch
         {
+            SURefType.SURefType_Axes => new Axes(SUAxesFromEntity(entityRef)),
             SURefType.SURefType_ArcCurve => new ArcCurve(SUArcCurveFromEntity(entityRef)),
             SURefType.SURefType_AttributeDictionary => new AttributeDictionary(
                 SUAttributeDictionaryFromEntity(entityRef)

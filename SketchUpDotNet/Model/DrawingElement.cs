@@ -117,6 +117,7 @@ public interface IDrawingElement : IEntity
     {
         return SUDrawingElementGetType(reference) switch
         {
+            SURefType.SURefType_Axes => new Axes(SUAxesFromDrawingElement(reference)),
             SURefType.SURefType_ComponentInstance => new ComponentInstance(
                 SUComponentInstanceFromDrawingElement(reference),
                 false
