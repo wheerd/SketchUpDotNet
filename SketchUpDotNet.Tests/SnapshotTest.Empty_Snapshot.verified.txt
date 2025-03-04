@@ -1958,6 +1958,13 @@
         ],
         EdgeCount: 12
       },
+      InstanceCount: 1,
+      UsedInstanceCount: 1,
+      IsInternal: true,
+      IsManifold: true,
+      IsLiveComponent: false,
+      Path: ,
+      InsertPoint: {},
       Layer: Layer0,
       Hidden: false,
       CastsShadows: true,

@@ -1,4 +1,5 @@
 using SketchUpDotNet.Bindings;
+using SketchUpDotNet.Geometry;
 using static SketchUpDotNet.Bindings.Methods;
 
 namespace SketchUpDotNet.Model;
@@ -17,40 +18,72 @@ public class Component : DrawingElement<SUComponentDefinitionRef>, IEntitiesPare
             d => new(d, attached)
         );
 
-    public string Name
+    public unsafe string Name
     {
-        get => GetName();
-        set => SetName(value);
+        get => GetString(&SUComponentDefinitionGetName);
+        set => SetString(&SUComponentDefinitionSetName, value);
     }
 
-    public string Guid => GetGuid();
+    public unsafe string Guid => GetString(&SUComponentDefinitionGetGuid);
 
-    public string Description
+    public unsafe string Description
     {
-        get => GetDescription();
-        set => SetDescription(value);
+        get => GetString(&SUComponentDefinitionGetDescription);
+        set => SetString(&SUComponentDefinitionSetDescription, value);
     }
 
     public Entities Entities { get; private init; }
 
-    public IEnumerable<ComponentInstance> Instances => GetInstances();
+    public unsafe IEnumerable<ComponentInstance> Instances =>
+        GetMany(
+            &SUComponentDefinitionGetNumInstances,
+            &SUComponentDefinitionGetInstances,
+            (SUComponentInstanceRef e) => new ComponentInstance(e, attached)
+        );
+    public unsafe int InstanceCount => GetInt(&SUComponentDefinitionGetNumInstances);
+    public unsafe int UsedInstanceCount => GetInt(&SUComponentDefinitionGetNumUsedInstances);
+
+    public unsafe SUComponentBehavior Behavior
+    {
+        get => Get<SUComponentBehavior>(&SUComponentDefinitionGetBehavior);
+        set => Set(&SUComponentDefinitionSetBehavior, value);
+    }
+
+    public unsafe bool IsInternal => GetBool(&SUComponentDefinitionIsInternal);
+
+    public unsafe bool IsManifold => GetBool(&SUComponentDefinitionIsManifold);
+
+    public unsafe bool IsLiveComponent => GetBool(&SUComponentDefinitionIsLiveComponent);
+
+    public unsafe string Path => GetString(&SUComponentDefinitionGetPath);
+
+    public unsafe IEnumerable<Opening> Openings =>
+        GetMany(
+            &SUComponentDefinitionGetNumOpenings,
+            &SUComponentDefinitionGetOpenings,
+            (SUOpeningRef e) => new Opening(e)
+        );
+    public unsafe int OpeningCount => GetInt(&SUComponentDefinitionGetNumOpenings);
+
+    public unsafe Point3D InsertPoint => new(Get<SUPoint3D>(&SUComponentDefinitionGetInsertPoint));
+
+    public unsafe void OrientFacesConsistently() =>
+        SUComponentDefinitionOrientFacesConsistently(Reference).CheckError();
+
+    public unsafe void SaveToFile(string path, SUModelVersion version)
+    {
+        var bytes = path.GetSBytes();
+        fixed (sbyte* bytesPtr = &bytes[0])
+            SUComponentDefinitionSaveToFile(Reference, bytesPtr, version).CheckError();
+    }
+
+    public unsafe SUComponentType Type => Get<SUComponentType>(&SUComponentDefinitionGetType);
 
     internal Component(SUComponentDefinitionRef @ref)
         : base(@ref)
     {
         Entities = GetEntities();
     }
-
-    private unsafe string GetName() => GetString(&SUComponentDefinitionGetName);
-
-    private unsafe void SetName(string name) => SetString(&SUComponentDefinitionSetName, name);
-
-    private unsafe string GetGuid() => GetString(&SUComponentDefinitionGetGuid);
-
-    private unsafe string GetDescription() => GetString(&SUComponentDefinitionGetDescription);
-
-    private unsafe void SetDescription(string description) =>
-        SetString(&SUComponentDefinitionSetDescription, description);
 
     private unsafe Entities GetEntities() =>
         GetOne<SUEntitiesRef, Entities>(
@@ -63,13 +96,6 @@ public class Component : DrawingElement<SUComponentDefinitionRef>, IEntitiesPare
         base.SetAttachedToModel(attached);
         Entities.SetAttachedToModel(attached);
     }
-
-    private unsafe ComponentInstance[] GetInstances() =>
-        GetMany(
-            &SUComponentDefinitionGetNumInstances,
-            &SUComponentDefinitionGetInstances,
-            (SUComponentInstanceRef e) => new ComponentInstance(e, attached)
-        );
 
     protected sealed override unsafe delegate* <SUComponentDefinitionRef*, SUResult> Release =>
         &SUComponentDefinitionRelease;

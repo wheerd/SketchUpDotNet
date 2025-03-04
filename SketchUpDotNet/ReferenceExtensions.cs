@@ -76,6 +76,28 @@ internal static class ReferenceExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static unsafe TElement[] GetMany<T, TElement>(
+        this T reference,
+        delegate* <T, nuint*, SUResult> getCount,
+        delegate* <T, nuint, TElement*, nuint*, SUResult> get
+    )
+        where T : unmanaged
+        where TElement : unmanaged
+    {
+        nuint num;
+        getCount(reference.EnsureReferenceValid(), &num).CheckError();
+        if (num == 0)
+            return [];
+        TElement[] elements = new TElement[num];
+        nuint count;
+        fixed (TElement* refsPtr = &elements[0])
+        {
+            get(reference.EnsureReferenceValid(), num, refsPtr, &count).CheckError();
+        }
+        return elements;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static unsafe string[] GetStrings<T>(
         this T reference,
         delegate* <T, nuint*, SUResult> getCount,

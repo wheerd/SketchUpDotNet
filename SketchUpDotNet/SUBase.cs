@@ -48,6 +48,13 @@ public abstract class SUBase<T> : IDisposable, IBase
         Reference.GetMany(getCount, get, construct, attached || this is SketchUpModel);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected unsafe TElement[] GetMany<TElement>(
+        delegate* <T, nuint*, SUResult> getCount,
+        delegate* <T, nuint, TElement*, nuint*, SUResult> get
+    )
+        where TElement : unmanaged => Reference.GetMany(getCount, get);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected unsafe string[] GetStrings(
         delegate* <T, nuint*, SUResult> getCount,
         delegate* <T, nuint, SUStringRef*, nuint*, SUResult> get
