@@ -142,6 +142,9 @@ public interface IDrawingElement : IEntity
             SURefType.SURefType_Polyline3D => new Polyline3D(
                 SUPolyline3dFromDrawingElement(reference)
             ),
+            SURefType.SURefType_SectionPlane => new SectionPlane(
+                SUSectionPlaneFromDrawingElement(reference)
+            ),
             _ => throw new NotImplementedException(),
         };
     }

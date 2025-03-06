@@ -35,7 +35,8 @@ public static class TestHelpers
                 new EntityConverter<Axes>(idSource),
                 new EntityConverter<GuidePoint>(idSource),
                 new EntityConverter<GuideLine>(idSource),
-                new EntityConverter<Polyline3D>(idSource)
+                new EntityConverter<Polyline3D>(idSource),
+                new EntityConverter<SectionPlane>(idSource)
             )
         );
         settings.IgnoreMembers<IEntity>(e => e.Model, e => e.PersistentId, e => e.ParentEntities);

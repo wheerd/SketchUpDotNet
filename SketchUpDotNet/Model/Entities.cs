@@ -108,6 +108,31 @@ public class Entities : SUBase<SUEntitiesRef>
         );
     public unsafe int Polyline3DCount => GetInt(&SUEntitiesGetNumPolyline3ds);
 
+    public unsafe IEnumerable<SectionPlane> SectionPlanes =>
+        GetMany(
+            &SUEntitiesGetNumSectionPlanes,
+            &SUEntitiesGetSectionPlanes,
+            (SUSectionPlaneRef d) => new SectionPlane(d)
+        );
+    public unsafe int SectionPlaneCount => GetInt(&SUEntitiesGetNumSectionPlanes);
+
+    public unsafe void AddSectionPlanes(params SectionPlane[] points) =>
+        AddMany(&SUEntitiesAddSectionPlanes, points);
+
+    public unsafe SectionPlane? ActiveSectionPlane
+    {
+        get =>
+            GetOptionalOne(
+                &SUEntitiesGetActiveSectionPlane,
+                (SUSectionPlaneRef sp) => new SectionPlane(sp)
+            );
+        set =>
+            SetOptionalOne<SUSectionPlaneRef, SectionPlane>(
+                &SUEntitiesSetActiveSectionPlane,
+                value
+            );
+    }
+
     public void Clear()
     {
         SUEntitiesClear(Reference).CheckError();
