@@ -139,6 +139,9 @@ public interface IDrawingElement : IEntity
             SURefType.SURefType_GuideLine => new GuideLine(
                 SUGuideLineFromDrawingElement(reference)
             ),
+            SURefType.SURefType_Polyline3D => new Polyline3D(
+                SUPolyline3dFromDrawingElement(reference)
+            ),
             _ => throw new NotImplementedException(),
         };
     }

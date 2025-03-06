@@ -116,6 +116,7 @@ public interface IEntity : IBase
             SURefType.SURefType_Layer => new Layer(SULayerFromEntity(entityRef)),
             SURefType.SURefType_Loop => new Loop(SULoopFromEntity(entityRef)),
             SURefType.SURefType_Material => new Material(SUMaterialFromEntity(entityRef)),
+            SURefType.SURefType_Polyline3D => new Polyline3D(SUPolyline3dFromEntity(entityRef)),
             SURefType.SURefType_Texture => new Texture(SUTextureFromEntity(entityRef)),
             SURefType.SURefType_Vertex => new Vertex(SUVertexFromEntity(entityRef)),
             _ => throw new NotImplementedException(),

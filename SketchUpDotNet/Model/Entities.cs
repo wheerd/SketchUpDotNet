@@ -100,6 +100,14 @@ public class Entities : SUBase<SUEntitiesRef>
     public unsafe void AddGuideLines(params GuideLine[] points) =>
         AddMany(&SUEntitiesAddGuideLines, points);
 
+    public unsafe IEnumerable<Polyline3D> Polyline3Ds =>
+        GetMany(
+            &SUEntitiesGetNumPolyline3ds,
+            &SUEntitiesGetPolyline3ds,
+            (SUPolyline3dRef d) => new Polyline3D(d)
+        );
+    public unsafe int Polyline3DCount => GetInt(&SUEntitiesGetNumPolyline3ds);
+
     public void Clear()
     {
         SUEntitiesClear(Reference).CheckError();
