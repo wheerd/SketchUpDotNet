@@ -136,6 +136,9 @@ public interface IDrawingElement : IEntity
             SURefType.SURefType_GuidePoint => new GuidePoint(
                 SUGuidePointFromDrawingElement(reference)
             ),
+            SURefType.SURefType_GuideLine => new GuideLine(
+                SUGuideLineFromDrawingElement(reference)
+            ),
             _ => throw new NotImplementedException(),
         };
     }

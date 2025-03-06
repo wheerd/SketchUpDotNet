@@ -89,6 +89,17 @@ public class Entities : SUBase<SUEntitiesRef>
     public unsafe void AddGuidePoints(params GuidePoint[] points) =>
         AddMany(&SUEntitiesAddGuidePoints, points);
 
+    public unsafe IEnumerable<GuideLine> GuideLines =>
+        GetMany(
+            &SUEntitiesGetNumGuideLines,
+            &SUEntitiesGetGuideLines,
+            (SUGuideLineRef d) => new GuideLine(d)
+        );
+    public unsafe int GuideLineCount => GetInt(&SUEntitiesGetNumGuideLines);
+
+    public unsafe void AddGuideLines(params GuideLine[] points) =>
+        AddMany(&SUEntitiesAddGuideLines, points);
+
     public void Clear()
     {
         SUEntitiesClear(Reference).CheckError();

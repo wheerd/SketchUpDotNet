@@ -112,6 +112,7 @@ public interface IEntity : IBase
             SURefType.SURefType_Font => new Font(SUFontFromEntity(entityRef)),
             SURefType.SURefType_Group => new Group(SUGroupFromEntity(entityRef)),
             SURefType.SURefType_GuidePoint => new GuidePoint(SUGuidePointFromEntity(entityRef)),
+            SURefType.SURefType_GuideLine => new GuideLine(SUGuideLineFromEntity(entityRef)),
             SURefType.SURefType_Layer => new Layer(SULayerFromEntity(entityRef)),
             SURefType.SURefType_Loop => new Loop(SULoopFromEntity(entityRef)),
             SURefType.SURefType_Material => new Material(SUMaterialFromEntity(entityRef)),
