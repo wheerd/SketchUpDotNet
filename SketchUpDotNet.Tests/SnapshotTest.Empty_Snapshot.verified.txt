@@ -27,6 +27,7 @@
     Instances: [
       {
         Name: ,
+        Guid: 2mSYqriQX2efrJ$YMo2i9p,
         Transform: {
           IsIdentity: true,
           IsMirrored: false,
@@ -50,6 +51,9 @@
             IsUnitVector: true
           }
         },
+        IsLocked: false,
+        AttachedInstanceCount: 0,
+        AttachedToCount: 0,
         Layer: Layer0,
         Hidden: false,
         CastsShadows: true,

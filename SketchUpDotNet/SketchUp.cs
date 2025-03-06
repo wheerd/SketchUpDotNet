@@ -19,6 +19,19 @@ public static class SketchUp
             _ => throw new NotImplementedException(),
         };
 
+    public static double FromSUVolume(this double value) =>
+        value
+        * LengthUnit switch
+        {
+            LengthUnit.Inch => 1.0,
+            LengthUnit.Feet => 1 / (12.0 * 12.0 * 12.0),
+            LengthUnit.Yard => 1 / (36.0 * 36.0 * 36.0),
+            LengthUnit.Millimeter => 25.4 * 25.4 * 25.4,
+            LengthUnit.Centimeter => 2.54 * 2.54 * 2.54,
+            LengthUnit.Meter => 0.0254 * 0.0254 * 0.0254,
+            _ => throw new NotImplementedException(),
+        };
+
     public static double ToSULength(this double value) =>
         value
         * LengthUnit switch
