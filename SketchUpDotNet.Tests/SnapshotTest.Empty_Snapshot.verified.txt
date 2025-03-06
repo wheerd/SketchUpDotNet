@@ -2118,6 +2118,13 @@
     },
     Id: $Axes62$
   },
+  Classifications: {
+    Schemas: [
+      {
+        Name: IFC 2x3
+      }
+    ]
+  },
   AttributeDictionaries: [
     {
       Name: temp,

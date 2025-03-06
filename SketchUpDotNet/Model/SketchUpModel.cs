@@ -62,6 +62,9 @@ public class SketchUpModel : SUBase<SUModelRef>, IEntitiesParent
 
     public unsafe Axes Axes => GetOne(&SUModelGetAxes, (SUAxesRef a) => new Axes(a));
 
+    public unsafe Classifications Classifications =>
+        GetOne(&SUModelGetClassifications, (SUClassificationsRef c) => new Classifications(c));
+
     public IEnumerable<AttributeDictionary> AttributeDictionaries => GetAttributeDictionaries();
 
     public unsafe AttributeDictionary GetAttributeDictionary(string name)
