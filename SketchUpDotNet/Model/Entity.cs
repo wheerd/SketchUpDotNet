@@ -84,44 +84,46 @@ public interface IEntity : IBase
     public SketchUpModel? Model { get; }
     public Entities? ParentEntities { get; }
 
-    internal static IEntity Create(SUEntityRef entityRef)
+    internal static IEntity Create(SUEntityRef reference)
     {
-        return SUEntityGetType(entityRef) switch
+        return SUEntityGetType(reference) switch
         {
-            SURefType.SURefType_Axes => new Axes(SUAxesFromEntity(entityRef)),
-            SURefType.SURefType_ArcCurve => new ArcCurve(SUArcCurveFromEntity(entityRef)),
+            SURefType.SURefType_Axes => new Axes(SUAxesFromEntity(reference)),
+            SURefType.SURefType_ArcCurve => new ArcCurve(SUArcCurveFromEntity(reference)),
             SURefType.SURefType_AttributeDictionary => new AttributeDictionary(
-                SUAttributeDictionaryFromEntity(entityRef)
+                SUAttributeDictionaryFromEntity(reference)
             ),
             SURefType.SURefType_ComponentInstance => new ComponentInstance(
-                SUComponentInstanceFromEntity(entityRef),
+                SUComponentInstanceFromEntity(reference),
                 false
             ),
             SURefType.SURefType_ComponentDefinition => new Component(
-                SUComponentDefinitionFromEntity(entityRef)
+                SUComponentDefinitionFromEntity(reference)
             ),
-            SURefType.SURefType_Curve => ICurve.Create(SUCurveFromEntity(entityRef)),
+            SURefType.SURefType_Curve => ICurve.Create(SUCurveFromEntity(reference)),
             SURefType.SURefType_Dimension
             or SURefType.SURefType_DimensionLinear
             or SURefType.SURefType_DimensionRadial => IDimension.Create(
-                SUDimensionFromEntity(entityRef)
+                SUDimensionFromEntity(reference)
             ),
-            SURefType.SURefType_Edge => new Edge(SUEdgeFromEntity(entityRef)),
-            SURefType.SURefType_EdgeUse => new EdgeUse(SUEdgeUseFromEntity(entityRef)),
-            SURefType.SURefType_Face => new Face(SUFaceFromEntity(entityRef)),
-            SURefType.SURefType_Font => new Font(SUFontFromEntity(entityRef)),
-            SURefType.SURefType_Group => new Group(SUGroupFromEntity(entityRef)),
-            SURefType.SURefType_GuidePoint => new GuidePoint(SUGuidePointFromEntity(entityRef)),
-            SURefType.SURefType_GuideLine => new GuideLine(SUGuideLineFromEntity(entityRef)),
-            SURefType.SURefType_Layer => new Layer(SULayerFromEntity(entityRef)),
-            SURefType.SURefType_Loop => new Loop(SULoopFromEntity(entityRef)),
-            SURefType.SURefType_Material => new Material(SUMaterialFromEntity(entityRef)),
-            SURefType.SURefType_Polyline3D => new Polyline3D(SUPolyline3dFromEntity(entityRef)),
+            SURefType.SURefType_Edge => new Edge(SUEdgeFromEntity(reference)),
+            SURefType.SURefType_EdgeUse => new EdgeUse(SUEdgeUseFromEntity(reference)),
+            SURefType.SURefType_Face => new Face(SUFaceFromEntity(reference)),
+            SURefType.SURefType_Font => new Font(SUFontFromEntity(reference)),
+            SURefType.SURefType_Group => new Group(SUGroupFromEntity(reference)),
+            SURefType.SURefType_GuidePoint => new GuidePoint(SUGuidePointFromEntity(reference)),
+            SURefType.SURefType_GuideLine => new GuideLine(SUGuideLineFromEntity(reference)),
+            SURefType.SURefType_Image => new Image(SUImageFromEntity(reference)),
+            SURefType.SURefType_Layer => new Layer(SULayerFromEntity(reference)),
+            SURefType.SURefType_Loop => new Loop(SULoopFromEntity(reference)),
+            SURefType.SURefType_Material => new Material(SUMaterialFromEntity(reference)),
+            SURefType.SURefType_Polyline3D => new Polyline3D(SUPolyline3dFromEntity(reference)),
             SURefType.SURefType_SectionPlane => new SectionPlane(
-                SUSectionPlaneFromEntity(entityRef)
+                SUSectionPlaneFromEntity(reference)
             ),
-            SURefType.SURefType_Texture => new Texture(SUTextureFromEntity(entityRef)),
-            SURefType.SURefType_Vertex => new Vertex(SUVertexFromEntity(entityRef)),
+            SURefType.SURefType_Text => new Text(SUTextFromEntity(reference)),
+            SURefType.SURefType_Texture => new Texture(SUTextureFromEntity(reference)),
+            SURefType.SURefType_Vertex => new Vertex(SUVertexFromEntity(reference)),
             _ => throw new NotImplementedException(),
         };
     }

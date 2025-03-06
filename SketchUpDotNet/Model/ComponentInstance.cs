@@ -6,32 +6,20 @@ namespace SketchUpDotNet.Model;
 
 public class ComponentInstance : DrawingElement<SUComponentInstanceRef>
 {
-    public string Name
+    public unsafe string Name
     {
-        get => GetName();
-        set => SetName(value);
+        get => GetString(&SUComponentInstanceGetName);
+        set => SetString(&SUComponentInstanceSetName, value);
     }
 
-    public Transform3D Transform
+    public unsafe Transform3D Transform
     {
-        get => GetTransform();
-        set => SetTransform(value);
+        get => new(Get<SUTransformation>(&SUComponentInstanceGetTransform));
+        set => Set(&SUComponentInstanceSetTransform, value.ToSU());
     }
 
-    public Component Definition => GetDefinition();
-
-    private unsafe string GetName() => GetString(&SUComponentInstanceGetName);
-
-    private unsafe void SetName(string name) => SetString(&SUComponentInstanceSetName, name);
-
-    private unsafe Component GetDefinition() =>
+    public unsafe Component Definition =>
         GetOne<SUComponentDefinitionRef, Component>(&SUComponentInstanceGetDefinition, d => new(d));
-
-    private unsafe Transform3D GetTransform() =>
-        new(Get<SUTransformation>(&SUComponentInstanceGetTransform));
-
-    private unsafe void SetTransform(Transform3D transform) =>
-        Set(&SUComponentInstanceSetTransform, transform.ToSU());
 
     internal unsafe ComponentInstance(SUComponentInstanceRef @ref, bool attached)
         : base(@ref)

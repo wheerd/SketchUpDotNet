@@ -133,6 +133,24 @@ public class Entities : SUBase<SUEntitiesRef>
             );
     }
 
+    public unsafe IEnumerable<Image> Images =>
+        GetMany(&SUEntitiesGetNumImages, &SUEntitiesGetImages, (SUImageRef d) => new Image(d));
+    public unsafe int ImageCount => GetInt(&SUEntitiesGetNumImages);
+
+    public unsafe void AddImage(Image image)
+    {
+        SUEntitiesAddImage(Reference.EnsureReferenceValid(), image.Reference.EnsureReferenceValid())
+            .CheckError();
+        if (attached)
+            image.SetAttachedToModel(true);
+    }
+
+    public unsafe IEnumerable<Text> Texts =>
+        GetMany(&SUEntitiesGetNumTexts, &SUEntitiesGetTexts, (SUTextRef d) => new Text(d));
+    public unsafe int TextCount => GetInt(&SUEntitiesGetNumTexts);
+
+    public unsafe void AddTexts(params Text[] points) => AddMany(&SUEntitiesAddTexts, points);
+
     public void Clear()
     {
         SUEntitiesClear(Reference).CheckError();

@@ -139,12 +139,14 @@ public interface IDrawingElement : IEntity
             SURefType.SURefType_GuideLine => new GuideLine(
                 SUGuideLineFromDrawingElement(reference)
             ),
+            SURefType.SURefType_Image => new Image(SUImageFromDrawingElement(reference)),
             SURefType.SURefType_Polyline3D => new Polyline3D(
                 SUPolyline3dFromDrawingElement(reference)
             ),
             SURefType.SURefType_SectionPlane => new SectionPlane(
                 SUSectionPlaneFromDrawingElement(reference)
             ),
+            SURefType.SURefType_Text => new Text(SUTextFromDrawingElement(reference)),
             _ => throw new NotImplementedException(),
         };
     }
