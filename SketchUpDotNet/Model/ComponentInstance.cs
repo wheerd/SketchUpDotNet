@@ -59,6 +59,12 @@ public class ComponentInstance : DrawingElement<SUComponentInstanceRef>
     public unsafe int AttachedToCount =>
         GetInt(&SUComponentInstanceGetNumAttachedToDrawingElements);
 
+    public unsafe ClassificationInfo? ClassificationInfo =>
+        GetOptionalOne(
+            &SUComponentInstanceCreateClassificationInfo,
+            (SUClassificationInfoRef c) => new ClassificationInfo(c)
+        );
+
     internal unsafe ComponentInstance(SUComponentInstanceRef @ref, bool attached)
         : base(@ref)
     {
