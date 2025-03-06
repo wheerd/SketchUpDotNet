@@ -2035,6 +2035,89 @@
       Id: $Font61$
     }
   ],
+  Axes: {
+    Origin: {},
+    XAxis: {
+      X: 0.0254,
+      Length: 0.0254,
+      IsValid: true,
+      IsUnitVector: true
+    },
+    YAxis: {
+      Y: 0.0254,
+      Length: 0.0254,
+      IsValid: true,
+      IsUnitVector: true
+    },
+    ZAxis: {
+      Z: 0.0254,
+      Length: 0.0254,
+      IsValid: true,
+      IsUnitVector: true
+    },
+    Transform: {
+      IsIdentity: true,
+      IsMirrored: false,
+      Origin: {},
+      XAxis: {
+        X: 0.0254,
+        Length: 0.0254,
+        IsValid: true,
+        IsUnitVector: true
+      },
+      YAxis: {
+        Y: 0.0254,
+        Length: 0.0254,
+        IsValid: true,
+        IsUnitVector: true
+      },
+      ZAxis: {
+        Z: 0.0254,
+        Length: 0.0254,
+        IsValid: true,
+        IsUnitVector: true
+      }
+    },
+    Plane: {
+      C: 0.0254,
+      Position: {},
+      Normal: {
+        Z: 0.0254,
+        Length: 0.0254,
+        IsValid: true,
+        IsUnitVector: true
+      }
+    },
+    Layer: Layer0,
+    Hidden: false,
+    CastsShadows: true,
+    ReceivesShadows: true,
+    BoundingBox: {
+      Min: {
+        X: 2.54E+28,
+        Y: 2.54E+28,
+        Z: 2.54E+28
+      },
+      Max: {
+        X: -2.54E+28,
+        Y: -2.54E+28,
+        Z: -2.54E+28
+      },
+      SizeX: -5.08E+28,
+      SizeY: -5.08E+28,
+      SizeZ: -5.08E+28,
+      Center: {},
+      Size: {
+        X: -5.08E+28,
+        Y: -5.08E+28,
+        Z: -5.08E+28,
+        Length: 8.798818102449898E+28,
+        IsValid: true,
+        IsUnitVector: false
+      }
+    },
+    Id: $Axes62$
+  },
   AttributeDictionaries: [
     {
       Name: temp,
@@ -2045,7 +2128,7 @@
       Values: {
         temp: 0
       },
-      Id: $Entity62$
+      Id: $Entity63$
     },
     {
       Name: GeoReference,
@@ -2068,7 +2151,7 @@
         ModelTranslationY: -174402260.58333763,
         UsesGeoReferencing: false
       },
-      Id: $Entity63$
+      Id: $Entity64$
     },
     {
       Name: GSU_ContributorsInfo,
@@ -2081,7 +2164,7 @@
         LastModifiedByKey: ,
         VersionKey: 1000
       },
-      Id: $Entity64$
+      Id: $Entity65$
     }
   ]
 }

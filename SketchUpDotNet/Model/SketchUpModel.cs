@@ -60,6 +60,8 @@ public class SketchUpModel : SUBase<SUModelRef>, IEntitiesParent
     public unsafe IEnumerable<Font> Fonts =>
         GetMany(&SUModelGetNumFonts, &SUModelGetFonts, (SUFontRef f) => new Font(f));
 
+    public unsafe Axes Axes => GetOne(&SUModelGetAxes, (SUAxesRef a) => new Axes(a));
+
     public IEnumerable<AttributeDictionary> AttributeDictionaries => GetAttributeDictionaries();
 
     public unsafe AttributeDictionary GetAttributeDictionary(string name)
