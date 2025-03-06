@@ -125,7 +125,6 @@ public interface IDrawingElement : IEntity
             SURefType.SURefType_ComponentDefinition => new Component(
                 SUComponentDefinitionFromDrawingElement(reference)
             ),
-            SURefType.SURefType_Group => new Group(SUGroupFromDrawingElement(reference)),
             SURefType.SURefType_Dimension
             or SURefType.SURefType_DimensionLinear
             or SURefType.SURefType_DimensionRadial => IDimension.Create(
@@ -133,6 +132,10 @@ public interface IDrawingElement : IEntity
             ),
             SURefType.SURefType_Edge => new Edge(SUEdgeFromDrawingElement(reference)),
             SURefType.SURefType_Face => new Face(SUFaceFromDrawingElement(reference)),
+            SURefType.SURefType_Group => new Group(SUGroupFromDrawingElement(reference)),
+            SURefType.SURefType_GuidePoint => new GuidePoint(
+                SUGuidePointFromDrawingElement(reference)
+            ),
             _ => throw new NotImplementedException(),
         };
     }

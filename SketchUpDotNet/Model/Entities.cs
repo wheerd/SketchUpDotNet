@@ -78,6 +78,17 @@ public class Entities : SUBase<SUEntitiesRef>
             (SUDimensionRef d) => IDimension.Create(d)
         );
 
+    public unsafe IEnumerable<GuidePoint> GuidePoints =>
+        GetMany(
+            &SUEntitiesGetNumGuidePoints,
+            &SUEntitiesGetGuidePoints,
+            (SUGuidePointRef d) => new GuidePoint(d)
+        );
+    public unsafe int GuidePointCount => GetInt(&SUEntitiesGetNumGuidePoints);
+
+    public unsafe void AddGuidePoints(params GuidePoint[] points) =>
+        AddMany(&SUEntitiesAddGuidePoints, points);
+
     public void Clear()
     {
         SUEntitiesClear(Reference).CheckError();

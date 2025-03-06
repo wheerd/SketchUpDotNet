@@ -100,7 +100,6 @@ public interface IEntity : IBase
             SURefType.SURefType_ComponentDefinition => new Component(
                 SUComponentDefinitionFromEntity(entityRef)
             ),
-            SURefType.SURefType_Group => new Group(SUGroupFromEntity(entityRef)),
             SURefType.SURefType_Curve => ICurve.Create(SUCurveFromEntity(entityRef)),
             SURefType.SURefType_Dimension
             or SURefType.SURefType_DimensionLinear
@@ -111,6 +110,8 @@ public interface IEntity : IBase
             SURefType.SURefType_EdgeUse => new EdgeUse(SUEdgeUseFromEntity(entityRef)),
             SURefType.SURefType_Face => new Face(SUFaceFromEntity(entityRef)),
             SURefType.SURefType_Font => new Font(SUFontFromEntity(entityRef)),
+            SURefType.SURefType_Group => new Group(SUGroupFromEntity(entityRef)),
+            SURefType.SURefType_GuidePoint => new GuidePoint(SUGuidePointFromEntity(entityRef)),
             SURefType.SURefType_Layer => new Layer(SULayerFromEntity(entityRef)),
             SURefType.SURefType_Loop => new Loop(SULoopFromEntity(entityRef)),
             SURefType.SURefType_Material => new Material(SUMaterialFromEntity(entityRef)),
