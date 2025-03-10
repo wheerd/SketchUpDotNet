@@ -30,8 +30,7 @@ public class ClassificationAttribute : SUBase<SUClassificationAttributeRef>
     public unsafe ClassificationAttribute GetChild(int i)
     {
         SUClassificationAttributeRef child;
-        SUClassificationAttributeGetChild(Reference.EnsureReferenceValid(), (nuint)i, &child)
-            .CheckError();
+        SUClassificationAttributeGetChild(Reference, (nuint)i, &child).CheckError();
         return new(child);
     }
 

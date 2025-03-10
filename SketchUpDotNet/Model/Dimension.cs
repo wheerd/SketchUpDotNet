@@ -34,7 +34,7 @@ public abstract class Dimension<T> : DrawingElement<T>, IDimension
         get
         {
             SUArrowType type;
-            SUDimensionGetArrowType(DimensionRef, &type);
+            SUDimensionGetArrowType(DimensionRef, &type).CheckError();
             return type;
         }
         set => SUDimensionSetArrowType(DimensionRef, value).CheckError();

@@ -40,14 +40,15 @@ public class TypedValue : SUBase<SUTypedValueRef>
     {
         if (array.Length == 0)
         {
-            SUTypedValueSetArrayItems(typedValue.Reference, 0, null);
+            SUTypedValueSetArrayItems(typedValue.Reference, 0, null).CheckError();
         }
         else
         {
             var typedValues = array.Cast<object>().Select(v => Create(v).Reference).ToArray();
             fixed (SUTypedValueRef* ptr = &typedValues[0])
             {
-                SUTypedValueSetArrayItems(typedValue.Reference, (nuint)typedValues.Length, ptr);
+                SUTypedValueSetArrayItems(typedValue.Reference, (nuint)typedValues.Length, ptr)
+                    .CheckError();
             }
         }
     }
@@ -94,7 +95,7 @@ public class TypedValue : SUBase<SUTypedValueRef>
                 }
                 finally
                 {
-                    SUStringRelease(&stringRef);
+                    SUStringRelease(&stringRef).CheckError();
                 }
             case SUTypedValueType.SUTypedValueType_Time:
                 long longValue;

@@ -16,14 +16,14 @@ internal static class InternalSketchUpExtensions
     internal static unsafe string GetString(this SUStringRef stringRef)
     {
         nuint strLen = 0;
-        SUStringGetUTF8Length(stringRef, &strLen);
+        SUStringGetUTF8Length(stringRef, &strLen).CheckError();
         if (strLen == 0)
             return string.Empty;
 
         sbyte[] strUtf8 = new sbyte[strLen + 1];
         fixed (sbyte* strPtr = &strUtf8[0])
         {
-            SUStringGetUTF8(stringRef, strLen + 1, strPtr, &strLen);
+            SUStringGetUTF8(stringRef, strLen + 1, strPtr, &strLen).CheckError();
 
             return Encoding.UTF8.GetString((byte*)strPtr, (int)strLen);
         }

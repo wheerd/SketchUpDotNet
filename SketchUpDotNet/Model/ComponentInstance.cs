@@ -37,8 +37,7 @@ public class ComponentInstance : DrawingElement<SUComponentInstanceRef>
     {
         double volume;
         var t = transform.ToSU();
-        SUComponentInstanceComputeVolume(Reference.EnsureReferenceValid(), &t, &volume)
-            .CheckError();
+        SUComponentInstanceComputeVolume(Reference, &t, &volume).CheckError();
         return volume.FromSUVolume();
     }
 

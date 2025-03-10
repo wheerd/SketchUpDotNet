@@ -61,7 +61,7 @@ public class Edge : DrawingElement<SUEdgeRef>
     private unsafe ICurve? GetCurve()
     {
         SUCurveRef curveRef;
-        var result = SUEdgeGetCurve(Reference.EnsureReferenceValid(), &curveRef);
+        var result = SUEdgeGetCurve(Reference, &curveRef);
         if (result == SUResult.SU_ERROR_NO_DATA)
             return null;
         result.CheckError();

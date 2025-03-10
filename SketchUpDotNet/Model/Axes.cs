@@ -35,7 +35,7 @@ public class Axes : DrawingElement<SUAxesRef>
         var x = xAxis.ToSU();
         var y = yAxis.ToSU();
         var z = zAxis.ToSU();
-        SUAxesSetAxesVecs(Reference.EnsureReferenceValid(), &x, &y, &z).CheckError();
+        SUAxesSetAxesVecs(Reference, &x, &y, &z).CheckError();
     }
 
     public unsafe Transform3D Transform => new(Get<SUTransformation>(&SUAxesGetTransform));

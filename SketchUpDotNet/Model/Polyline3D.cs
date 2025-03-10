@@ -19,8 +19,7 @@ public class Polyline3D : DrawingElement<SUPolyline3dRef>
         var suPoints = points.Select(p => p.ToSU()).ToArray();
         fixed (SUPoint3D* ptr = &suPoints[0])
         {
-            SUPolyline3dAddPoints(Reference.EnsureReferenceValid(), (nuint)suPoints.Length, ptr)
-                .CheckError();
+            SUPolyline3dAddPoints(Reference, (nuint)suPoints.Length, ptr).CheckError();
         }
     }
 

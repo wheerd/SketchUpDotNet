@@ -9,15 +9,6 @@ namespace SketchUpDotNet;
 internal static class ReferenceExtensions
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static unsafe T EnsureReferenceValid<T>(this T reference)
-        where T : unmanaged
-    {
-        var genericRef = (GenericRef*)&reference;
-        ObjectDisposedException.ThrowIf(genericRef->ptr == null, reference);
-        return reference;
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static unsafe void AddMany<T, TElement>(
         this T reference,
         delegate* <T, nuint, TElement*, SUResult> add,
@@ -30,7 +21,7 @@ internal static class ReferenceExtensions
         var refs = elements.Select(f => f.Reference).ToArray();
         fixed (TElement* refsPtr = &refs[0])
         {
-            add(reference.EnsureReferenceValid(), (nuint)refs.Length, refsPtr).CheckError();
+            add(reference, (nuint)refs.Length, refsPtr).CheckError();
         }
         if (attached)
         {
@@ -54,14 +45,14 @@ internal static class ReferenceExtensions
         where TOut : IBase
     {
         nuint num;
-        getCount(reference.EnsureReferenceValid(), &num).CheckError();
+        getCount(reference, &num).CheckError();
         if (num == 0)
             return [];
         TElement[] refs = new TElement[num];
         nuint count;
         fixed (TElement* refsPtr = &refs[0])
         {
-            get(reference.EnsureReferenceValid(), num, refsPtr, &count).CheckError();
+            get(reference, num, refsPtr, &count).CheckError();
         }
         var results = new TOut[count];
         for (nuint i = 0; i < count; i++)
@@ -85,14 +76,14 @@ internal static class ReferenceExtensions
         where TElement : unmanaged
     {
         nuint num;
-        getCount(reference.EnsureReferenceValid(), &num).CheckError();
+        getCount(reference, &num).CheckError();
         if (num == 0)
             return [];
         TElement[] elements = new TElement[num];
         nuint count;
         fixed (TElement* refsPtr = &elements[0])
         {
-            get(reference.EnsureReferenceValid(), num, refsPtr, &count).CheckError();
+            get(reference, num, refsPtr, &count).CheckError();
         }
         return elements;
     }
@@ -106,7 +97,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         nuint num;
-        getCount(reference.EnsureReferenceValid(), &num).CheckError();
+        getCount(reference, &num).CheckError();
         if (num == 0)
             return [];
         SUStringRef[] refs = new SUStringRef[num];
@@ -114,7 +105,7 @@ internal static class ReferenceExtensions
         {
             fixed (SUStringRef* strPtr = &refs[i])
             {
-                SUStringCreate(strPtr);
+                SUStringCreate(strPtr).CheckError();
             }
         }
         try
@@ -122,7 +113,7 @@ internal static class ReferenceExtensions
             nuint count;
             fixed (SUStringRef* refsPtr = &refs[0])
             {
-                get(reference.EnsureReferenceValid(), num, refsPtr, &count).CheckError();
+                get(reference, num, refsPtr, &count).CheckError();
             }
             var results = new string[count];
             for (nuint i = 0; i < count; i++)
@@ -137,7 +128,7 @@ internal static class ReferenceExtensions
             {
                 fixed (SUStringRef* refPtr = &refs[i])
                 {
-                    SUStringRelease(refPtr);
+                    SUStringRelease(refPtr).CheckError();
                 }
             }
         }
@@ -155,7 +146,7 @@ internal static class ReferenceExtensions
         where TOut : IBase
     {
         TElement element;
-        get(reference.EnsureReferenceValid(), &element).CheckError();
+        get(reference, &element).CheckError();
         var outElement = construct(element);
         if (attached)
         {
@@ -180,7 +171,7 @@ internal static class ReferenceExtensions
         TElement dict;
         fixed (sbyte* bytesPtr = &bytes[0])
         {
-            get(reference.EnsureReferenceValid(), bytesPtr, &dict).CheckError();
+            get(reference, bytesPtr, &dict).CheckError();
         }
         var result = construct(dict);
         if (attached)
@@ -200,7 +191,7 @@ internal static class ReferenceExtensions
         where TOut : SUBase<TElement>
     {
         TElement element;
-        var result = get(reference.EnsureReferenceValid(), &element);
+        var result = get(reference, &element);
         if (result == SUResult.SU_ERROR_NO_DATA)
             return null;
         result.CheckError();
@@ -223,12 +214,12 @@ internal static class ReferenceExtensions
         SUStringCreate(&stringRef).CheckError();
         try
         {
-            getter(reference.EnsureReferenceValid(), &stringRef).CheckError();
+            getter(reference, &stringRef).CheckError();
             return stringRef.GetString();
         }
         finally
         {
-            SUStringRelease(&stringRef);
+            SUStringRelease(&stringRef).CheckError();
         }
     }
 
@@ -242,7 +233,7 @@ internal static class ReferenceExtensions
     {
         fixed (sbyte* bytesPtr = value.GetSBytes())
         {
-            setter(reference.EnsureReferenceValid(), bytesPtr).CheckError();
+            setter(reference, bytesPtr).CheckError();
         }
     }
 
@@ -251,7 +242,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         bool value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value;
     }
 
@@ -264,7 +255,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         byte byteValue = *(byte*)&value;
-        setter(reference.EnsureReferenceValid(), byteValue).CheckError();
+        setter(reference, byteValue).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -275,7 +266,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         SUColor value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value.ToColor();
     }
 
@@ -287,7 +278,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         SUColor value;
-        var result = getter(reference.EnsureReferenceValid(), &value);
+        var result = getter(reference, &value);
         if (result == SUResult.SU_ERROR_NO_DATA)
         {
             return null;
@@ -305,7 +296,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         SUColor suColor = value.ToSU();
-        setter(reference.EnsureReferenceValid(), &suColor).CheckError();
+        setter(reference, &suColor).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -316,7 +307,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         sbyte value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value;
     }
 
@@ -328,7 +319,7 @@ internal static class ReferenceExtensions
     )
         where T : unmanaged
     {
-        setter(reference.EnsureReferenceValid(), value).CheckError();
+        setter(reference, value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -336,7 +327,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         int value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value;
     }
 
@@ -345,7 +336,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         nuint value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return (int)value;
     }
 
@@ -357,7 +348,7 @@ internal static class ReferenceExtensions
     )
         where T : unmanaged
     {
-        setter(reference.EnsureReferenceValid(), value).CheckError();
+        setter(reference, value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -368,7 +359,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         double value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value;
     }
 
@@ -380,7 +371,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         double value;
-        var result = getter(reference.EnsureReferenceValid(), &value);
+        var result = getter(reference, &value);
         if (result == SUResult.SU_ERROR_NO_DATA)
             return null;
         result.CheckError();
@@ -395,7 +386,7 @@ internal static class ReferenceExtensions
     )
         where T : unmanaged
     {
-        setter(reference.EnsureReferenceValid(), value).CheckError();
+        setter(reference, value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -406,7 +397,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         short value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value;
     }
 
@@ -418,7 +409,7 @@ internal static class ReferenceExtensions
     )
         where T : unmanaged
     {
-        setter(reference.EnsureReferenceValid(), value).CheckError();
+        setter(reference, value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -431,7 +422,7 @@ internal static class ReferenceExtensions
         var vector = new double[3];
         fixed (double* vectorPtr = &vector[0])
         {
-            getter(reference.EnsureReferenceValid(), vectorPtr).CheckError();
+            getter(reference, vectorPtr).CheckError();
         }
         return new(vector);
     }
@@ -447,7 +438,7 @@ internal static class ReferenceExtensions
         var values = new double[] { value.X, value.Y, value.Z };
         fixed (double* valuesPtr = &values[0])
         {
-            setter(reference.EnsureReferenceValid(), valuesPtr).CheckError();
+            setter(reference, valuesPtr).CheckError();
         }
     }
 
@@ -456,7 +447,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         long value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value;
     }
 
@@ -468,7 +459,7 @@ internal static class ReferenceExtensions
     )
         where T : unmanaged
     {
-        setter(reference.EnsureReferenceValid(), value).CheckError();
+        setter(reference, value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -479,7 +470,7 @@ internal static class ReferenceExtensions
         where T : unmanaged
     {
         float value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value;
     }
 
@@ -491,7 +482,7 @@ internal static class ReferenceExtensions
     )
         where T : unmanaged
     {
-        setter(reference.EnsureReferenceValid(), value).CheckError();
+        setter(reference, value).CheckError();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -503,7 +494,7 @@ internal static class ReferenceExtensions
         where TValue : unmanaged
     {
         TValue value;
-        getter(reference.EnsureReferenceValid(), &value).CheckError();
+        getter(reference, &value).CheckError();
         return value;
     }
 
@@ -518,7 +509,7 @@ internal static class ReferenceExtensions
         where TRef : unmanaged
         where TValue : SUBase<TRef>
     {
-        setter(reference.EnsureReferenceValid(), value.Reference).CheckError();
+        setter(reference, value.Reference).CheckError();
         if (attached)
         {
             value.SetAttachedToModel(true);
@@ -536,7 +527,7 @@ internal static class ReferenceExtensions
         where TRef : unmanaged
         where TValue : SUBase<TRef>
     {
-        setter(reference.EnsureReferenceValid(), value?.Reference ?? default).CheckError();
+        setter(reference, value?.Reference ?? default).CheckError();
         if (attached)
         {
             value?.SetAttachedToModel(true);

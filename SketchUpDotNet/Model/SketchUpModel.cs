@@ -93,13 +93,13 @@ public class SketchUpModel : SUBase<SUModelRef>, IEntitiesParent
 
     public unsafe void Save(
         string path,
-        SUModelVersion version = SUModelVersion.SUModelVersion_SU2017
+        SUModelVersion version = SUModelVersion.SUModelVersion_Current
     )
     {
         var pathBytes = path.GetSBytes();
         fixed (sbyte* pathPtr = pathBytes)
         {
-            SUModelSaveToFileWithVersion(Reference, pathPtr, version);
+            SUModelSaveToFileWithVersion(Reference, pathPtr, version).CheckError();
         }
     }
 

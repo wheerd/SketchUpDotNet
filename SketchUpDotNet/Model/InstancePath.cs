@@ -9,23 +9,21 @@ public class InstancePath : SUBase<SUInstancePathRef>
     public unsafe InstancePath Clone()
     {
         SUInstancePathRef clone;
-        SUInstancePathCreateCopy(&clone, Reference.EnsureReferenceValid()).CheckError();
+        SUInstancePathCreateCopy(&clone, Reference).CheckError();
         return new(clone);
     }
 
     public unsafe void PushInstance(ComponentInstance instance) =>
-        SUInstancePathPushInstance(Reference.EnsureReferenceValid(), instance.Reference)
-            .CheckError();
+        SUInstancePathPushInstance(Reference, instance.Reference).CheckError();
 
-    public unsafe void PopInstance() =>
-        SUInstancePathPopInstance(Reference.EnsureReferenceValid()).CheckError();
+    public unsafe void PopInstance() => SUInstancePathPopInstance(Reference).CheckError();
 
     public unsafe IEntity Leaf
     {
         get => GetOne(&SUInstancePathGetLeafAsEntity, (SUEntityRef leaf) => IEntity.Create(leaf));
         set
         {
-            SUInstancePathSetLeaf(Reference.EnsureReferenceValid(), value.EntityRef).CheckError();
+            SUInstancePathSetLeaf(Reference, value.EntityRef).CheckError();
             if (attached)
             {
                 value.SetAttachedToModel(true);
@@ -41,20 +39,14 @@ public class InstancePath : SUBase<SUInstancePathRef>
     public unsafe Transform3D GetTransformAtDepth(int depth)
     {
         SUTransformation transform;
-        SUInstancePathGetTransformAtDepth(
-                Reference.EnsureReferenceValid(),
-                (nuint)depth,
-                &transform
-            )
-            .CheckError();
+        SUInstancePathGetTransformAtDepth(Reference, (nuint)depth, &transform).CheckError();
         return new(transform);
     }
 
     public unsafe ComponentInstance GetInstanceAtDepth(int depth)
     {
         SUComponentInstanceRef instance;
-        SUInstancePathGetInstanceAtDepth(Reference.EnsureReferenceValid(), (nuint)depth, &instance)
-            .CheckError();
+        SUInstancePathGetInstanceAtDepth(Reference, (nuint)depth, &instance).CheckError();
         return new(instance, attached);
     }
 
@@ -70,25 +62,19 @@ public class InstancePath : SUBase<SUInstancePathRef>
         ;
         try
         {
-            SUInstancePathGetPersistentIDAtDepth(
-                    Reference.EnsureReferenceValid(),
-                    (nuint)depth,
-                    &str
-                )
-                .CheckError();
+            SUInstancePathGetPersistentIDAtDepth(Reference, (nuint)depth, &str).CheckError();
             return str.GetString();
         }
         finally
         {
-            SUStringRelease(&str);
+            SUStringRelease(&str).CheckError();
         }
     }
 
     public unsafe bool Contains(IEntity entity)
     {
         bool contains;
-        SUInstancePathContains(Reference.EnsureReferenceValid(), entity.EntityRef, &contains)
-            .CheckError();
+        SUInstancePathContains(Reference, entity.EntityRef, &contains).CheckError();
         return contains;
     }
 

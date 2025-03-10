@@ -139,8 +139,7 @@ public class Entities : SUBase<SUEntitiesRef>
 
     public unsafe void AddImage(Image image)
     {
-        SUEntitiesAddImage(Reference.EnsureReferenceValid(), image.Reference.EnsureReferenceValid())
-            .CheckError();
+        SUEntitiesAddImage(Reference, image.Reference).CheckError();
         if (attached)
             image.SetAttachedToModel(true);
     }

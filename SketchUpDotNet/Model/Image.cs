@@ -29,7 +29,7 @@ public class Image : DrawingElement<SUImageRef>
         {
             var imageRep = new ImageRep();
             fixed (SUImageRepRef* ptr = &imageRep.Reference)
-                SUImageGetImageRep(Reference.EnsureReferenceValid(), ptr).CheckError();
+                SUImageGetImageRep(Reference, ptr).CheckError();
             return imageRep;
         }
     }

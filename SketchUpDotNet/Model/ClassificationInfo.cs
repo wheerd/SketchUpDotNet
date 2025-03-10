@@ -13,17 +13,12 @@ public class ClassificationInfo : SUBase<SUClassificationInfoRef>
         SUStringCreate(&stringRef).CheckError();
         try
         {
-            SUClassificationInfoGetSchemaName(
-                    Reference.EnsureReferenceValid(),
-                    (nuint)i,
-                    &stringRef
-                )
-                .CheckError();
+            SUClassificationInfoGetSchemaName(Reference, (nuint)i, &stringRef).CheckError();
             return stringRef.GetString();
         }
         finally
         {
-            SUStringRelease(&stringRef);
+            SUStringRelease(&stringRef).CheckError();
         }
     }
 
@@ -33,29 +28,19 @@ public class ClassificationInfo : SUBase<SUClassificationInfoRef>
         SUStringCreate(&stringRef).CheckError();
         try
         {
-            SUClassificationInfoGetSchemaType(
-                    Reference.EnsureReferenceValid(),
-                    (nuint)i,
-                    &stringRef
-                )
-                .CheckError();
+            SUClassificationInfoGetSchemaType(Reference, (nuint)i, &stringRef).CheckError();
             return stringRef.GetString();
         }
         finally
         {
-            SUStringRelease(&stringRef);
+            SUStringRelease(&stringRef).CheckError();
         }
     }
 
     public unsafe ClassificationAttribute GetSchemaAttribute(int i)
     {
         SUClassificationAttributeRef attribute;
-        SUClassificationInfoGetSchemaAttribute(
-                Reference.EnsureReferenceValid(),
-                (nuint)i,
-                &attribute
-            )
-            .CheckError();
+        SUClassificationInfoGetSchemaAttribute(Reference, (nuint)i, &attribute).CheckError();
         return new(attribute);
     }
 
@@ -67,17 +52,12 @@ public class ClassificationInfo : SUBase<SUClassificationInfoRef>
         try
         {
             SUClassificationAttributeRef attribute;
-            SUClassificationInfoGetSchemaAttributeByPath(
-                    Reference.EnsureReferenceValid(),
-                    s,
-                    &attribute
-                )
-                .CheckError();
+            SUClassificationInfoGetSchemaAttributeByPath(Reference, s, &attribute).CheckError();
             return new(attribute);
         }
         finally
         {
-            SUStringRelease(&s);
+            SUStringRelease(&s).CheckError();
         }
     }
 

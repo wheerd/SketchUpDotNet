@@ -12,7 +12,7 @@ public class Schema : SUBase<SUSchemaRef>
         SUSchemaTypeRef type;
         var sBytes = name.GetSBytes();
         fixed (sbyte* bytesPtr = &sBytes[0])
-            SUSchemaGetSchemaType(Reference.EnsureReferenceValid(), bytesPtr, &type).CheckError();
+            SUSchemaGetSchemaType(Reference, bytesPtr, &type).CheckError();
         return type;
     }
 

@@ -4,6 +4,16 @@ namespace SketchUpDotNet;
 
 public static class SketchUp
 {
+    public static (int minor, int major) ApiVersion => GetApiVersion();
+
+    private static unsafe (int minor, int major) GetApiVersion()
+    {
+        nuint minor,
+            major;
+        SUGetAPIVersion(&minor, &major);
+        return (minor: (int)minor, major: (int)major);
+    }
+
     public static LengthUnit LengthUnit { get; set; } = LengthUnit.Meter;
 
     public static double FromSULength(this double value) =>
