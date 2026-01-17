@@ -6,6 +6,22 @@ namespace SketchUpDotNet.Geometry;
 
 public sealed class Transform3D
 {
+    public static Transform3D Identity => Scale(1.0);
+
+    public static unsafe Transform3D FromValues(double[] values)
+    {
+        if (values.Length != 16)
+            throw new ArgumentException(
+                "Transform matrix must have exactly 16 values",
+                nameof(values)
+            );
+
+        SUTransformation t;
+        for (int i = 0; i < 16; i++)
+            t.values[i] = values[i];
+        return new(t);
+    }
+
     public static unsafe Transform3D FromPointAndNormal(Point3D point, Vector3D normal)
     {
         SUPoint3D pointSU = point.ToSU();
